@@ -14,6 +14,7 @@
 .detail-nav-btn:disabled{cursor:not-allowed;opacity:.42;background:#eef1ee;color:#7a857d}
 
 .stats.four{grid-template-columns:repeat(4,1fr)}
+.stats.five{grid-template-columns:repeat(5,1fr)}
 .mode-grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
 .btn.small{padding:9px 12px;font-size:13px}
 .sound-tip{background:#edf4ef;border:1px solid #cfded3;color:#355845;padding:13px 15px;border-radius:13px;margin:-2px 0 18px}
@@ -28,8 +29,8 @@
 .sound-answer{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center;margin-top:14px}
 .sound-answer img{width:150px;height:110px;object-fit:cover;border-radius:12px;background:#e8ebe8}
 .sound-answer audio{width:100%}
-@media(max-width:900px){.stats.four{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:720px){.stats.four{grid-template-columns:1fr}.sound-answer{grid-template-columns:1fr}.sound-answer img{width:100%;height:180px}.topbar nav{max-width:calc(100vw - 58px)}}
+@media(max-width:900px){.stats.four,.stats.five{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.stats.four,.stats.five{grid-template-columns:1fr}.sound-answer{grid-template-columns:1fr}.sound-answer img{width:100%;height:180px}.topbar nav{max-width:calc(100vw - 58px)}}
 
 /* 多图鸟种图库：图片全部来自课程PPT */
 .card-media{position:relative;background:#e8ebe8}
@@ -59,7 +60,7 @@
   .ppt-image-item img{height:auto;max-height:360px}
   .image-zoom{padding:58px 10px 24px}
   .image-zoom>button{right:12px;top:10px}
-  .modal-card{padding-bottom:92px}
+  .modal-card{padding-bottom:124px}
   .detail-nav{grid-template-columns:1fr;gap:8px;padding:12px}
   .detail-nav-top,.detail-nav-bottom{display:grid}
   .detail-nav-sticky{position:fixed;left:10px;right:10px;bottom:10px;z-index:70;display:grid;grid-template-columns:1fr auto 1fr;gap:7px;padding:8px;border:1px solid var(--line);border-radius:18px;background:rgba(247,250,247,.96);box-shadow:0 12px 35px rgba(27,50,39,.22);backdrop-filter:blur(10px)}

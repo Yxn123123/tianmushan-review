@@ -13,10 +13,11 @@ const store = {
 let state = {
   route: 'home',
   quiz: null,
-  listFilters: { bird: '', insect: '' },
+  listFilters: { bird: '', insect: '', plant: '' },
   listIds: {
     bird: D.birds.map(x => x.id),
-    insect: D.insects.map(x => x.id)
+    insect: D.insects.map(x => x.id),
+    plant: D.plants.map(x => x.id)
   },
   detail: null,
   restoring: false
@@ -33,9 +34,10 @@ const pickImage = x => {
 };
 
 function progress() {
-  const p = store.get('progress', { birds: [], insects: [], sounds: [] });
+  const p = store.get('progress', { birds: [], insects: [], sounds: [], plants: [] });
   p.birds ||= [];
   p.insects ||= [];
+  p.plants ||= [];
   p.sounds ||= [];
   return p;
 }
@@ -61,17 +63,17 @@ function stopAudio() {
   document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
 }
 function listFor(kind) {
-  const all = kind === 'bird' ? D.birds : D.insects;
+  const all = kind === 'bird' ? D.birds : kind === 'plant' ? D.plants : D.insects;
   const ids = state.listIds?.[kind] || all.map(x => x.id);
   const byId = new Map(all.map(x => [x.id, x]));
   const list = ids.map(id => byId.get(id)).filter(Boolean);
   return list.length ? list : all;
 }
 function getItem(kind, id) {
-  return (kind === 'bird' ? D.birds : D.insects).find(v => v.id === id);
+  return (kind === 'bird' ? D.birds : kind === 'plant' ? D.plants : D.insects).find(v => v.id === id);
 }
 function detailHash(kind, id) {
-  return `#${kind === 'bird' ? 'birds' : 'insects'}/${encodeURIComponent(id)}`;
+  return `#${kind === 'bird' ? 'birds' : kind === 'plant' ? 'plants' : 'insects'}/${encodeURIComponent(id)}`;
 }
 function routeHash(r) {
   return r === 'home' ? '#home' : `#${r}`;
@@ -100,12 +102,12 @@ function restoreFromLocation() {
   if (!hash) return;
   const [path] = hash.split('?');
   const [routeName, id] = path.split('/');
-  const kind = routeName === 'birds' ? 'bird' : routeName === 'insects' ? 'insect' : null;
+  const kind = routeName === 'birds' ? 'bird' : routeName === 'plants' ? 'plant' : routeName === 'insects' ? 'insect' : null;
   state.restoring = true;
   if (kind && id && getItem(kind, id)) {
     state.route = routeName;
     state.detail = { kind, id };
-  } else if (['home', 'birds', 'insects', 'sounds', 'quiz', 'mistakes'].includes(routeName)) {
+  } else if (['home', 'birds', 'insects', 'plants', 'sounds', 'quiz', 'mistakes'].includes(routeName)) {
     state.route = routeName;
     state.detail = null;
     state.quiz = null;
@@ -147,50 +149,56 @@ function home() {
   return `
     <section class="hero">
       <h1>看标本、听鸟声，练到会写为止</h1>
-      <p>根据课程资料制作的鸟类与昆虫识别训练。每种鸟集中展示其PPT页面中的全部图片，练习时会随机抽取其中一张；昆虫练习所属目和目的主要特征；鸟声练习按考核要求填写种名、科名和目名。</p>
+      <p>根据课程资料制作的鸟类、昆虫与植物识别训练。鸟类和植物集中展示全部标本图片，练习时随机抽图；昆虫练习所属目和主要特征；鸟声练习按考核要求填写种名、科名和目名。</p>
       <div class="actions">
         <button class="btn secondary" onclick="startQuiz('bird',10)">开始鸟类练习</button>
+        <button class="btn secondary" onclick="startQuiz('plant',10)">开始植物练习</button>
         <button class="btn secondary" onclick="startQuiz('insect',10)">开始昆虫练习</button>
         <button class="btn secondary" onclick="startQuiz('sound',5)">开始鸟声练习</button>
         <button class="btn ghost" onclick="startQuiz('mock',20)">20题鸟类模拟</button>
       </div>
     </section>
-    <div class="stats four">
+    <div class="stats five">
       <div class="stat"><span>鸟类已掌握</span><strong>${p.birds.length} / ${D.birds.length}</strong></div>
       <div class="stat"><span>昆虫目已掌握</span><strong>${p.insects.length} / ${D.insects.length}</strong></div>
+      <div class="stat"><span>植物已掌握</span><strong>${p.plants.length} / ${D.plants.length}</strong></div>
       <div class="stat"><span>鸟声已掌握</span><strong>${p.sounds.length} / ${D.sounds.length}</strong></div>
       <div class="stat"><span>错题</span><strong>${mistakes().length}</strong></div>
     </div>
     <section>
-      <div class="section-head"><div><h2>建议复习顺序</h2><p>先熟悉知识卡和全部鸟声，再做看图、听声填空，最后进行模拟。</p></div></div>
+      <div class="section-head"><div><h2>建议复习顺序</h2><p>先熟悉知识卡和全部图片，再做看图、听声填空，最后进行模拟。</p></div></div>
       <div class="mode-grid">
         <div class="mode"><h3>① 鸟类知识卡</h3><p>查看每种鸟在PPT中的全部图片，并把两处识别特征对应到不同角度和状态。</p><button class="btn" data-route="birds">查看57种鸟</button></div>
         <div class="mode"><h3>② 昆虫目知识卡</h3><p>固定按翅、口器、足、触角、腹末的顺序观察。</p><button class="btn" data-route="insects">查看14个目</button></div>
-        <div class="mode"><h3>③ 鸟声资料</h3><p>反复听课程提供的10段鸟声，并把声音和分类信息绑定。</p><button class="btn" data-route="sounds">听全部鸟声</button></div>
-        <div class="mode"><h3>④ 模拟与错题</h3><p>随机抽题，答错后自动加入错题本，之后集中重练。</p><button class="btn" data-route="quiz">选择练习</button></div>
+        <div class="mode"><h3>③ 植物标本知识卡</h3><p>查看70个植物标本分组和139张标本图，重点记种名、科名与两处可见特征。</p><button class="btn" data-route="plants">查看植物标本</button></div>
+        <div class="mode"><h3>④ 鸟声资料</h3><p>反复听课程提供的10段鸟声，并把声音和分类信息绑定。</p><button class="btn" data-route="sounds">听全部鸟声</button></div>
+        <div class="mode"><h3>⑤ 模拟与错题</h3><p>随机抽题，答错后自动加入错题本，之后集中重练。</p><button class="btn" data-route="quiz">选择练习</button></div>
       </div>
     </section>`;
 }
 
 function cards(kind) {
-  const fullList = kind === 'bird' ? D.birds : D.insects;
+  const fullList = kind === 'bird' ? D.birds : kind === 'plant' ? D.plants : D.insects;
   const q = state.listFilters[kind] || '';
   const list = q ? fullList.filter(x => norm(JSON.stringify(x)).includes(norm(q))) : fullList;
   state.listIds[kind] = list.map(x => x.id);
-  const title = kind === 'bird' ? '鸟类复习' : '昆虫复习';
-  const sub = kind === 'bird' ? '57种鸟：每种集中展示对应PPT页面的全部图片，练习时随机抽图' : '14个目：优先掌握标本上能直接看到的结构';
+  const title = kind === 'bird' ? '鸟类复习' : kind === 'plant' ? '植物标本复习' : '昆虫复习';
+  const sub = kind === 'bird' ? '57种鸟：每种集中展示对应PPT页面的全部图片，练习时随机抽图' : kind === 'plant' ? '70个植物标本分组：看标本图，掌握种名、科名和两处可见特征' : '14个目：优先掌握标本上能直接看到的结构';
   return `<div class="section-head"><div><h2>${title}</h2><p>${sub}</p></div><input id="search" class="search" value="${esc(q)}" placeholder="搜索名称、科或目……"></div><div class="grid" id="cardgrid">${list.map(x => card(kind, x)).join('')}</div>`;
 }
 function card(kind, x) {
-  const count = kind === 'bird' ? imagesOf(x).length : 1;
-  return `<article class="card" onclick="openCard('${kind}','${x.id}')"><div class="card-media"><img loading="lazy" src="${x.image}" alt="${x.name}">${kind === 'bird' ? `<span class="image-count">${count}张PPT图</span>` : ''}</div><div class="card-body"><h3>${x.name}</h3><div class="meta">${kind === 'bird' ? `${x.order} · ${x.family}` : x.latin}</div><div class="tags"><span class="tag">${esc(x.features[0])}</span></div></div></article>`;
+  const count = (kind === 'bird' || kind === 'plant') ? imagesOf(x).length : 1;
+  const badge = kind === 'bird' ? `${count}张PPT图` : kind === 'plant' ? `${count}张标本图` : '';
+  const meta = kind === 'bird' ? `${x.order} · ${x.family}` : kind === 'plant' ? `${x.family} · ${x.latin}` : x.latin;
+  return `<article class="card" onclick="openCard('${kind}','${x.id}')"><div class="card-media"><img loading="lazy" src="${x.image}" alt="${x.name}">${badge ? `<span class="image-count">${badge}</span>` : ''}</div><div class="card-body"><h3>${x.name}</h3><div class="meta">${meta}</div><div class="tags"><span class="tag">${esc(x.features[0])}</span></div></div></article>`;
 }
 function setupSearch(kind) {
   const input = document.querySelector('#search');
   if (!input) return;
   input.oninput = () => {
     const q = norm(input.value);
-    const list = (kind === 'bird' ? D.birds : D.insects).filter(x => norm(JSON.stringify(x)).includes(q));
+    const source = kind === 'bird' ? D.birds : kind === 'plant' ? D.plants : D.insects;
+    const list = source.filter(x => norm(JSON.stringify(x)).includes(q));
     state.listFilters[kind] = input.value;
     state.listIds[kind] = list.map(x => x.id);
     document.querySelector('#cardgrid').innerHTML = list.map(x => card(kind, x)).join('') || '<div class="empty">没有找到匹配内容</div>';
@@ -215,9 +223,15 @@ function setupSoundSearch() {
   };
 }
 
-function birdGallery(x) {
+function imageGallery(x, label) {
   const imgs = imagesOf(x);
-  return `<section class="ppt-gallery"><div class="gallery-title"><div><b>PPT第${x.slide}页全部图片</b><span>共${imgs.length}张，均来自课程PPT</span></div><span class="pill">点击图片可放大</span></div><div class="ppt-image-grid">${imgs.map((src, i) => `<button class="ppt-image-item" onclick="zoomPptImage('${src}','${esc(x.name)} · PPT图片${i + 1}')"><img loading="lazy" src="${src}" alt="${esc(x.name)} PPT图片${i + 1}"><span>${i + 1} / ${imgs.length}</span></button>`).join('')}</div></section>`;
+  return `<section class="ppt-gallery"><div class="gallery-title"><div><b>${label}</b><span>共${imgs.length}张，点击可放大查看</span></div><span class="pill">点击图片可放大</span></div><div class="ppt-image-grid">${imgs.map((src, i) => `<button class="ppt-image-item" onclick="zoomPptImage('${src}','${esc(x.name)} · ${label}${i + 1}')"><img loading="lazy" src="${src}" alt="${esc(x.name)} ${label}${i + 1}"><span>${i + 1} / ${imgs.length}</span></button>`).join('')}</div></section>`;
+}
+function birdGallery(x) {
+  return imageGallery(x, `PPT第${x.slide}页全部图片`);
+}
+function plantGallery(x) {
+  return imageGallery(x, '植物标本全部图片');
 }
 window.zoomPptImage = (src, alt) => {
   const old = document.querySelector('#image-zoom');
@@ -228,15 +242,19 @@ window.closeImageZoom = (event, force = false) => {
   if (force || event.target.id === 'image-zoom') document.querySelector('#image-zoom')?.remove();
 };
 
+function routeForKind(kind) {
+  return kind === 'bird' ? 'birds' : kind === 'plant' ? 'plants' : 'insects';
+}
 function detailNav(kind, id, position) {
   const list = listFor(kind);
   const index = list.findIndex(x => x.id === id);
   const prev = index > 0 ? list[index - 1] : null;
   const next = index >= 0 && index < list.length - 1 ? list[index + 1] : null;
-  const prevLabel = kind === 'bird' ? '上一种' : '上一目';
-  const nextLabel = kind === 'bird' ? '下一种' : '下一目';
-  const backLabel = kind === 'bird' ? '返回鸟类列表' : '返回昆虫列表';
-  return `<nav class="detail-nav detail-nav-${position}" aria-label="${kind === 'bird' ? '鸟类' : '昆虫'}详情切换">
+  const prevLabel = kind === 'bird' ? '上一种' : kind === 'plant' ? '上一种' : '上一目';
+  const nextLabel = kind === 'bird' ? '下一种' : kind === 'plant' ? '下一种' : '下一目';
+  const backLabel = kind === 'bird' ? '返回鸟类列表' : kind === 'plant' ? '返回植物列表' : '返回昆虫列表';
+  const aria = kind === 'bird' ? '鸟类详情切换' : kind === 'plant' ? '植物详情切换' : '昆虫详情切换';
+  return `<nav class="detail-nav detail-nav-${position}" aria-label="${aria}">
     <button class="detail-nav-btn prev" ${prev ? `onclick="switchDetail('${kind}','${prev.id}')"` : 'disabled'} title="${prev ? `${prevLabel}：${esc(prev.name)}` : `没有${prevLabel}`}">← <span>${prevLabel}：</span><b>${prev ? esc(prev.name) : '无'}</b></button>
     <button class="detail-nav-btn back" onclick="backToList('${kind}')">${backLabel}</button>
     <button class="detail-nav-btn next" ${next ? `onclick="switchDetail('${kind}','${next.id}')"` : 'disabled'} title="${next ? `${nextLabel}：${esc(next.name)}` : `没有${nextLabel}`}"><span>${nextLabel}：</span><b>${next ? esc(next.name) : '无'}</b> →</button>
@@ -244,10 +262,20 @@ function detailNav(kind, id, position) {
 }
 function detailBody(kind, x) {
   const isBird = kind === 'bird';
+  const isPlant = kind === 'plant';
+  const gallery = isBird ? birdGallery(x) : isPlant ? plantGallery(x) : `<img class="modal-hero" src="${x.image}" alt="${x.name}">`;
+  const meta = isBird ? `${x.order} · ${x.family}` : isPlant ? `${x.family} · ${x.latin}` : x.latin;
+  const title = isBird ? 'PPT红字优先的两处特征' : isPlant ? '标本可见的两处识别特征' : '考试优先写的两处特征';
+  const basis = isBird ? `<p class="meta feature-basis">特征依据：${esc(x.featureBasis || 'PPT红字优先')}</p>` : isPlant ? `<p class="meta feature-basis">特征依据：植物标本整理清单</p>` : '';
+  const notes = isBird
+    ? `<h3>资料说明</h3><p>${esc(x.description) || 'PPT未提供文字说明，可重点依据图片记忆。'}</p><p class="meta">以上${imagesOf(x).length}张图片全部提取自本种对应的PPT第${x.slide}页；二维码等非鸟类小图未纳入。</p>`
+    : isPlant
+      ? `<h3>资料说明</h3><p>${esc(x.description) || '重点观察标本照片中的叶形、叶序、叶缘、茎枝、花果或孢子囊等可见结构。'}</p><p class="meta">以上${imagesOf(x).length}张图片来自植物标本目录；规范学名：${esc(x.latin || x.labelLatin || '')}；识别状态：${esc(x.status || '已整理')}。</p>`
+      : `<h3>进一步确认</h3><p>${x.extra.map(esc).join('；')}。</p>`;
   return `<button class="modal-close" onclick="closeModal()">×</button><div class="modal-card" id="detail-card">
     ${detailNav(kind, x.id, 'top')}
-    ${isBird ? birdGallery(x) : `<img class="modal-hero" src="${x.image}" alt="${x.name}">`}
-    <div class="modal-content"><div class="meta">${isBird ? `${x.order} · ${x.family}` : x.latin}</div><h2>${x.name}</h2><h3>${isBird ? 'PPT红字优先的两处特征' : '考试优先写的两处特征'}</h3><div class="feature-list">${x.features.map((f, i) => `<div class="feature">${i + 1}. ${esc(f)}</div>`).join('')}</div>${isBird ? `<p class="meta feature-basis">特征依据：${esc(x.featureBasis || 'PPT红字优先')}</p>` : ''}${isBird ? `<h3>资料说明</h3><p>${esc(x.description) || 'PPT未提供文字说明，可重点依据图片记忆。'}</p><p class="meta">以上${imagesOf(x).length}张图片全部提取自本种对应的PPT第${x.slide}页；二维码等非鸟类小图未纳入。</p>` : `<h3>进一步确认</h3><p>${x.extra.map(esc).join('；')}。</p>`}<div class="answer-row"><button class="btn" onclick="startSingle('${kind}','${x.id}')">随机抽一张练习</button></div></div>
+    ${gallery}
+    <div class="modal-content"><div class="meta">${meta}</div><h2>${x.name}</h2><h3>${title}</h3><div class="feature-list">${x.features.map((f, i) => `<div class="feature">${i + 1}. ${esc(f)}</div>`).join('')}</div>${basis}${notes}<div class="answer-row"><button class="btn" onclick="startSingle('${kind}','${x.id}')">随机抽一张练习</button></div></div>
     ${detailNav(kind, x.id, 'bottom')}
     ${detailNav(kind, x.id, 'sticky')}
   </div>`;
@@ -255,7 +283,7 @@ function detailBody(kind, x) {
 window.openCard = (kind, id, push = true) => {
   const x = getItem(kind, id);
   if (!x) return;
-  state.route = kind === 'bird' ? 'birds' : 'insects';
+  state.route = routeForKind(kind);
   state.detail = { kind, id };
   modal.classList.remove('hidden');
   modal.setAttribute('aria-hidden', 'false');
@@ -274,7 +302,7 @@ window.switchDetail = (kind, id, push = true) => {
 };
 window.backToList = kind => {
   closeModal(false);
-  route(kind === 'bird' ? 'birds' : 'insects');
+  route(routeForKind(kind));
 };
 window.openSoundCard = id => {
   const x = D.sounds.find(v => v.id === id);
@@ -288,7 +316,7 @@ window.closeModal = (push = true) => {
   modal.innerHTML = '';
   document.querySelector('#image-zoom')?.remove();
   if (state.detail) {
-    const r = state.detail.kind === 'bird' ? 'birds' : 'insects';
+    const r = routeForKind(state.detail.kind);
     state.detail = null;
     state.route = r;
     if (push) pushLocation();
@@ -309,35 +337,37 @@ document.addEventListener('keydown', e => {
 });
 
 function quizMenu() {
-  return `<div class="section-head"><div><h2>选择练习</h2><p>图片来自课程PPT/PDF，鸟声来自课程“卷用鸟声”文件夹。</p></div></div>
+  return `<div class="section-head"><div><h2>练习与考试</h2><p>看图、听声或抽题复习，错题会自动进入错题本。</p></div></div>
   <div class="mode-grid">
-    <div class="mode"><h3>鸟类快速练习</h3><p>随机10题；每种鸟从其PPT全部图片中随机抽取一张。</p><button class="btn" onclick="startQuiz('bird',10)">开始</button></div>
-    <div class="mode"><h3>昆虫看图练习</h3><p>随机10题，判断所属目并写两项特征。</p><button class="btn" onclick="startQuiz('insect',10)">开始</button></div>
-    <div class="mode"><h3>鸟类模拟考试</h3><p>按考核形式随机抽20种鸟，并从各自PPT图片中随机抽一张。</p><button class="btn" onclick="startQuiz('mock',20)">开始20题</button></div>
-    <div class="mode"><h3>鸟声模拟考试</h3><p>从10段课程音频中随机抽5段，填写种名、科名和目名。</p><button class="btn" onclick="startQuiz('sound',5)">开始5题</button></div>
+    <div class="mode"><h3>鸟类看图练习</h3><p>随机10题，根据PPT原图填写种名、科名和目名。</p><button class="btn" onclick="startQuiz('bird',10)">开始</button></div>
+    <div class="mode"><h3>植物标本练习</h3><p>随机10题，根据标本照片填写种名、科名和识别特征。</p><button class="btn" onclick="startQuiz('plant',10)">开始</button></div>
+    <div class="mode"><h3>昆虫看图练习</h3><p>随机10题，填写对应类群名称和主要特征。</p><button class="btn" onclick="startQuiz('insect',10)">开始</button></div>
+    <div class="mode"><h3>鸟类模拟考试</h3><p>一次完成20题，覆盖更多PPT图片和识别特征。</p><button class="btn" onclick="startQuiz('mock',20)">开始20题</button></div>
+    <div class="mode"><h3>鸟声学习考试</h3><p>从10段鸟声中随机抽5题，听声填写分类信息。</p><button class="btn" onclick="startQuiz('sound',5)">开始5题</button></div>
   </div>`;
 }
 window.startQuiz = (mode, count) => {
   closeModal();
   let kind = 'bird';
   let source = D.birds;
+  if (mode === 'plant') { kind = 'plant'; source = D.plants; }
   if (mode === 'insect') { kind = 'insect'; source = D.insects; }
   if (mode === 'sound') { kind = 'sound'; source = D.sounds; }
   state.route = 'quiz';
   const chosen = shuffle(source).slice(0, Math.min(count, source.length));
   state.quiz = {
     mode, kind,
-    items: chosen.map(x => kind === 'bird' ? { ...x, _quizImage: pickImage(x) } : x),
+    items: chosen.map(x => (kind === 'bird' || kind === 'plant') ? { ...x, _quizImage: pickImage(x) } : x),
     i: 0, score: 0, answered: false, plays: 0
   };
   render();
 };
 window.startSingle = (kind, id) => {
-  let source = kind === 'bird' ? D.birds : kind === 'insect' ? D.insects : D.sounds;
+  let source = kind === 'bird' ? D.birds : kind === 'plant' ? D.plants : kind === 'insect' ? D.insects : D.sounds;
   const x = source.find(v => v.id === id);
   closeModal();
   state.route = 'quiz';
-  state.quiz = { mode: kind, kind, items: [kind === 'bird' ? { ...x, _quizImage: pickImage(x) } : x], i: 0, score: 0, answered: false, plays: 0 };
+  state.quiz = { mode: kind, kind, items: [(kind === 'bird' || kind === 'plant') ? { ...x, _quizImage: pickImage(x) } : x], i: 0, score: 0, answered: false, plays: 0 };
   render();
 };
 
@@ -348,12 +378,19 @@ function quizView() {
   if (q.kind === 'sound') return soundQuizView();
   const x = q.items[q.i];
   const bird = q.kind === 'bird';
-  return `<div class="quiz-shell"><div class="quiz-top"><span>${bird ? '鸟类' : '昆虫'}练习</span><span>${q.i + 1} / ${q.items.length}</span></div><div class="progress"><i style="width:${(q.i / q.items.length) * 100}%"></i></div><section class="question"><img class="question-image" src="${bird ? (x._quizImage || x.image) : x.quizImage}" alt="待识别标本"><div class="form-grid">${bird ? `<div class="field"><label>种名</label><input id="a-name" autocomplete="off"></div><div class="field"><label>科名</label><input id="a-family" autocomplete="off"></div><div class="field"><label>目名</label><input id="a-order" autocomplete="off"></div>` : `<div class="field span3"><label>所属目</label><input id="a-name" autocomplete="off"></div>`}<div class="field span3"><label>识别特征一</label><textarea id="a-f1"></textarea></div><div class="field span3"><label>识别特征二</label><textarea id="a-f2"></textarea></div></div><div id="feedback"></div><div class="answer-row"><button class="btn" id="submit" onclick="submitAnswer()">提交答案</button><button class="btn ghost" onclick="skipQuestion()">不会，直接看答案</button></div></section></div>`;
+  const plant = q.kind === 'plant';
+  const label = bird ? '鸟类看图' : plant ? '植物标本' : '昆虫看图';
+  const image = (bird || plant) ? (x._quizImage || x.image) : x.quizImage;
+  const fields = (bird || plant)
+    ? `<div class="field"><label>种名</label><input id="a-name" autocomplete="off"></div><div class="field"><label>科名</label><input id="a-family" autocomplete="off"></div>${bird ? `<div class="field"><label>目名</label><input id="a-order" autocomplete="off"></div>` : `<div class="field"><label>规范学名</label><input id="a-latin" autocomplete="off"></div>`}`
+    : `<div class="field span3"><label>类群名称</label><input id="a-name" autocomplete="off"></div>`;
+  return `<div class="quiz-shell"><div class="quiz-top"><span>${label}</span><span>${q.i + 1} / ${q.items.length}</span></div><div class="progress"><i style="width:${(q.i / q.items.length) * 100}%"></i></div><section class="question"><img class="question-image" src="${image}" alt="练习图片"><div class="form-grid">${fields}<div class="field span3"><label>识别特征1</label><textarea id="a-f1"></textarea></div><div class="field span3"><label>识别特征2</label><textarea id="a-f2"></textarea></div></div><div id="feedback"></div><div class="answer-row"><button class="btn" id="submit" onclick="submitAnswer()">提交答案</button><button class="btn ghost" onclick="skipQuestion()">不会，直接看答案</button></div></section></div>`;
 }
+
 function soundQuizView() {
   const q = state.quiz;
   const x = q.items[q.i];
-  return `<div class="quiz-shell"><div class="quiz-top"><span>鸟声练习</span><span>${q.i + 1} / ${q.items.length}</span></div><div class="progress"><i style="width:${(q.i / q.items.length) * 100}%"></i></div><section class="question sound-question"><div class="sound-stage"><div class="sound-icon">♪</div><h2>请听鸟声并填写分类信息</h2><p id="play-count" class="meta">本题播放次数：${q.plays}</p><audio id="quiz-audio" class="quiz-audio" controls preload="metadata" src="${x.audio}" onplay="trackPlay()">浏览器不支持音频播放。</audio></div><div class="form-grid"><div class="field"><label>种名</label><input id="a-name" autocomplete="off"></div><div class="field"><label>科名</label><input id="a-family" autocomplete="off"></div><div class="field"><label>目名</label><input id="a-order" autocomplete="off"></div></div><div id="feedback"></div><div class="answer-row"><button class="btn" id="submit" onclick="submitSoundAnswer()">提交答案</button><button class="btn ghost" onclick="skipSoundQuestion()">不会，直接看答案</button></div></section></div>`;
+  return `<div class="quiz-shell"><div class="quiz-top"><span>鸟声练习</span><span>${q.i + 1} / ${q.items.length}</span></div><div class="progress"><i style="width:${(q.i / q.items.length) * 100}%"></i></div><section class="question sound-question"><div class="sound-stage"><div class="sound-icon">&#9834;</div><h2>请听鸟声并填写分类信息</h2><p id="play-count" class="meta">本题播放次数：${q.plays}</p><audio id="quiz-audio" class="quiz-audio" controls preload="metadata" src="${x.audio}" onplay="trackPlay()">浏览器不支持音频播放。</audio></div><div class="form-grid"><div class="field"><label>种名</label><input id="a-name" autocomplete="off"></div><div class="field"><label>科名</label><input id="a-family" autocomplete="off"></div><div class="field"><label>目名</label><input id="a-order" autocomplete="off"></div></div><div id="feedback"></div><div class="answer-row"><button class="btn" id="submit" onclick="submitSoundAnswer()">提交答案</button><button class="btn ghost" onclick="skipSoundQuestion()">不会，直接看答案</button></div></section></div>`;
 }
 window.trackPlay = () => {
   if (!state.quiz || state.quiz.kind !== 'sound' || state.quiz.answered) return;
@@ -372,8 +409,11 @@ window.submitAnswer = () => {
   if (q.kind === 'bird') {
     correct = correct && norm(document.querySelector('#a-family').value) === norm(x.family) && norm(document.querySelector('#a-order').value) === norm(x.order);
   }
+  if (q.kind === 'plant') {
+    correct = correct && norm(document.querySelector('#a-family').value) === norm(x.family);
+  }
   q.answered = true;
-  const bucket = q.kind === 'bird' ? 'birds' : 'insects';
+  const bucket = q.kind === 'bird' ? 'birds' : q.kind === 'plant' ? 'plants' : 'insects';
   if (correct) {
     q.score++;
     mark(bucket, x.id, true);
@@ -383,14 +423,28 @@ window.submitAnswer = () => {
     addMistake(q.kind, x.id);
   }
   const wrote = (f1.trim() ? 1 : 0) + (f2.trim() ? 1 : 0);
-  document.querySelector('#feedback').innerHTML = `<div class="answer ${correct ? '' : 'bad'}"><h3>${correct ? '分类信息正确' : '分类信息需要订正'}</h3><p>${q.kind === 'bird' ? `<b>${x.name}</b>｜${x.order}｜${x.family}` : `正确答案：<b>${x.name}</b>（${x.latin}）`}</p><p>${q.kind === 'bird' ? 'PPT红字优先的两处识别特征：' : '推荐写出的两处识别特征：'}</p><ul>${x.features.map(f => `<li>${esc(f)}</li>`).join('')}</ul><div class="self-check"><label><input type="checkbox"> 我的答案写到了特征一</label><label><input type="checkbox"> 我的答案写到了特征二</label></div><p class="meta">你填写了 ${wrote} 处特征。特征部分请对照推荐答案自行判断。</p>${q.kind === 'bird' ? `<div class="answer-row"><button class="btn ghost small" onclick="openCard('bird','${x.id}')">查看本种全部${imagesOf(x).length}张PPT图片</button></div>` : ''}</div>`;
+  const title = correct ? '回答正确' : '需要订正';
+  const classLine = q.kind === 'bird'
+    ? `<b>${x.name}</b> ｜ ${x.order} ｜ ${x.family}`
+    : q.kind === 'plant'
+      ? `<b>${x.name}</b> ｜ ${x.family} ｜ ${x.latin}`
+      : `类群：<b>${x.name}</b>｜${x.latin}`;
+  const featureLabel = q.kind === 'bird' ? 'PPT红字优先识别特征' : q.kind === 'plant' ? '标本可见识别特征' : '主要识别特征';
+  const detailButton = (q.kind === 'bird' || q.kind === 'plant') ? `<div class="answer-row"><button class="btn ghost small" onclick="openCard('${q.kind}','${x.id}')">查看全部${imagesOf(x).length}张图片</button></div>` : '';
+  document.querySelector('#feedback').innerHTML = `<div class="answer ${correct ? '' : 'bad'}"><h3>${title}</h3><p>${classLine}</p><p>${featureLabel}</p><ul>${x.features.map(f => `<li>${esc(f)}</li>`).join('')}</ul><div class="self-check"><label><input type="checkbox"> 特征描述基本准确</label><label><input type="checkbox"> 分类信息已经记住</label></div><p class="meta">本题已填写 ${wrote} 条特征，可对照上方要点自行订正。</p>${detailButton}</div>`;
   document.querySelector('#submit').textContent = q.i === q.items.length - 1 ? '查看成绩' : '下一题';
 };
 window.skipQuestion = () => {
   const q = state.quiz, x = q.items[q.i];
   addMistake(q.kind, x.id);
   q.answered = true;
-  document.querySelector('#feedback').innerHTML = `<div class="answer bad"><h3>答案</h3><p>${q.kind === 'bird' ? `<b>${x.name}</b>｜${x.order}｜${x.family}` : `<b>${x.name}</b>（${x.latin}）`}</p><ul>${x.features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>${q.kind === 'bird' ? `<div class="answer-row"><button class="btn ghost small" onclick="openCard('bird','${x.id}')">查看本种全部${imagesOf(x).length}张PPT图片</button></div>` : ''}</div>`;
+  const classLine = q.kind === 'bird'
+    ? `<b>${x.name}</b> ｜ ${x.order} ｜ ${x.family}`
+    : q.kind === 'plant'
+      ? `<b>${x.name}</b> ｜ ${x.family} ｜ ${x.latin}`
+      : `<b>${x.name}</b>｜${x.latin}`;
+  const detailButton = (q.kind === 'bird' || q.kind === 'plant') ? `<div class="answer-row"><button class="btn ghost small" onclick="openCard('${q.kind}','${x.id}')">查看全部${imagesOf(x).length}张图片</button></div>` : '';
+  document.querySelector('#feedback').innerHTML = `<div class="answer bad"><h3>??</h3><p>${classLine}</p><ul>${x.features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>${detailButton}</div>`;
   document.querySelector('#submit').textContent = q.i === q.items.length - 1 ? '查看成绩' : '下一题';
 };
 window.submitSoundAnswer = () => {
@@ -431,17 +485,17 @@ window.nextQuestion = () => {
 
 function results() {
   const q = state.quiz;
-  const label = q.kind === 'sound' ? '鸟声分类信息答对' : '分类信息答对';
+  const label = q.kind === 'sound' ? '鸟声分类正确' : '分类答对';
   const extra = q.kind === 'sound'
-    ? '答错或跳过的鸟声已经加入错题本，可以从错题卡重新播放。'
-    : '识别特征请依据每题答案中的两个勾选项自行核对。答错或跳过的题目已经加入错题本。';
-  return `<div class="quiz-shell"><section class="question"><h2>本轮完成</h2><div class="stat"><span>${label}</span><strong>${q.score} / ${q.items.length}</strong></div><p>${extra}</p><div class="answer-row"><button class="btn" onclick="startQuiz('${q.mode}',${q.items.length})">再练一轮</button><button class="btn ghost" data-route="mistakes">查看错题</button><button class="btn ghost" data-route="home">返回首页</button></div></section></div>`;
+    ? '答错或跳过的鸟声题已加入错题本，可以重复听辨。'
+    : '对照推荐特征检查自己的描述，答错或跳过的题目已加入错题本。';
+  return `<div class="quiz-shell"><section class="question"><h2>本轮完成</h2><div class="stat"><span>${label}</span><strong>${q.score} / ${q.items.length}</strong></div><p>${extra}</p><div class="answer-row"><button class="btn" onclick="startQuiz('${q.mode}',${q.items.length})">再练一次</button><button class="btn ghost" data-route="mistakes">错题本</button><button class="btn ghost" data-route="home">返回首页</button></div></section></div>`;
 }
 
 function mistakesView() {
   const ms = mistakes();
   const items = ms.map(m => {
-    const list = m.kind === 'bird' ? D.birds : m.kind === 'insect' ? D.insects : D.sounds;
+    const list = m.kind === 'bird' ? D.birds : m.kind === 'plant' ? D.plants : m.kind === 'insect' ? D.insects : D.sounds;
     const x = list.find(v => v.id === m.id);
     return x ? { ...x, kind: m.kind } : null;
   }).filter(Boolean);
@@ -459,6 +513,7 @@ function render() {
   if (state.route === 'home') app.innerHTML = home();
   else if (state.route === 'birds') { app.innerHTML = cards('bird'); setupSearch('bird'); }
   else if (state.route === 'insects') { app.innerHTML = cards('insect'); setupSearch('insect'); }
+  else if (state.route === 'plants') { app.innerHTML = cards('plant'); setupSearch('plant'); }
   else if (state.route === 'sounds') { app.innerHTML = soundCards(); setupSoundSearch(); }
   else if (state.route === 'quiz') app.innerHTML = quizView();
   else if (state.route === 'mistakes') app.innerHTML = mistakesView();

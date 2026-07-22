@@ -1467,5 +1467,1406 @@ window.REVIEW_DATA = {
       "image": "assets/birds/slide_21/image_01.webp",
       "note": "雄鸟叫声（call）"
     }
+  ],
+  "plants": [
+    {
+      "id": "p001",
+      "name": "六角莲",
+      "latin": "Dysosma pleiantha",
+      "labelLatin": "Dysosma pleiantha",
+      "family": "小檗科",
+      "features": [
+        "多年生草本；叶大，近圆形或盾状，掌状深裂。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶大，近圆形或盾状，掌状深裂。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p001_01.webp",
+      "images": [
+        "assets/plants/p001_01.webp",
+        "assets/plants/p001_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/小檗科/六角莲_Dysosma pleiantha"
+    },
+    {
+      "id": "p002",
+      "name": "楼梯草",
+      "latin": "Elatostema involucratum",
+      "labelLatin": "Elatostema involucratum",
+      "family": "荨麻科",
+      "features": [
+        "草本；茎较肉质，叶常二列状排列，叶缘有锯齿。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "草本；茎较肉质，叶常二列状排列，叶缘有锯齿。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p002_01.webp",
+      "images": [
+        "assets/plants/p002_01.webp",
+        "assets/plants/p002_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/荨麻科/楼梯草_Elatostema involucratum"
+    },
+    {
+      "id": "p003",
+      "name": "白杜",
+      "latin": "Euonymus maackii",
+      "labelLatin": "Euonymus maackii",
+      "family": "卫矛科",
+      "features": [
+        "落叶灌木或小乔木；叶对生，叶缘细锯齿，果为蒴果。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶灌木或小乔木；叶对生，叶缘细锯齿，果为蒴果。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p003_01.webp",
+      "images": [
+        "assets/plants/p003_01.webp",
+        "assets/plants/p003_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/卫矛科/白杜_Euonymus maackii"
+    },
+    {
+      "id": "p004",
+      "name": "虎耳草",
+      "latin": "Saxifraga stolonifera",
+      "labelLatin": "Saxifraga stolonifera",
+      "family": "虎耳草科",
+      "features": [
+        "匍匐草本，具细长走茎；叶多基生、近圆形，表面有毛。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "匍匐草本，具细长走茎；叶多基生、近圆形，表面有毛。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p004_01.webp",
+      "images": [
+        "assets/plants/p004_01.webp",
+        "assets/plants/p004_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/虎耳草科/虎耳草_Saxifraga stolonifera"
+    },
+    {
+      "id": "p005",
+      "name": "夏蜡梅",
+      "latin": "Calycanthus chinensis",
+      "labelLatin": "Calycanthus chinensis",
+      "family": "蜡梅科",
+      "features": [
+        "落叶灌木；叶对生、宽卵形，全缘，叶脉明显。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶灌木；叶对生、宽卵形，全缘，叶脉明显。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p005_01.webp",
+      "images": [
+        "assets/plants/p005_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/蜡梅科/夏蜡梅_Calycanthus chinensis"
+    },
+    {
+      "id": "p006",
+      "name": "蜡梅",
+      "latin": "Chimonanthus praecox",
+      "labelLatin": "Chimonanthus praecox",
+      "family": "蜡梅科",
+      "features": [
+        "落叶灌木；叶对生、纸质，果托成熟后呈坛状。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶灌木；叶对生、纸质，果托成熟后呈坛状。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p006_01.webp",
+      "images": [
+        "assets/plants/p006_01.webp",
+        "assets/plants/p006_02.webp",
+        "assets/plants/p006_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/蜡梅科/蜡梅_Chimonanthus praecox"
+    },
+    {
+      "id": "p007",
+      "name": "羊角槭",
+      "latin": "Acer yangjuechi",
+      "labelLatin": "Acer yangjuechi",
+      "family": "无患子科",
+      "features": [
+        "乔木；叶对生；双翅果成对，果翅形似羊角。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "乔木；叶对生；双翅果成对，果翅形似羊角。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p007_01.webp",
+      "images": [
+        "assets/plants/p007_01.webp",
+        "assets/plants/p007_02.webp",
+        "assets/plants/p007_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/无患子科/羊角槭_Acer yangjuechi"
+    },
+    {
+      "id": "p008",
+      "name": "柳杉",
+      "latin": "Cryptomeria fortunei",
+      "labelLatin": "Cryptomeria fortunei",
+      "family": "柏科",
+      "features": [
+        "常绿乔木；叶钻形并螺旋排列，球果近球形。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "常绿乔木；叶钻形并螺旋排列，球果近球形。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p008_01.webp",
+      "images": [
+        "assets/plants/p008_01.webp",
+        "assets/plants/p008_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/柏科/柳杉_Cryptomeria fortunei"
+    },
+    {
+      "id": "p009",
+      "name": "三尖杉",
+      "latin": "Cephalotaxus fortunei",
+      "labelLatin": "Cephalotaxus fortunei",
+      "family": "三尖杉科",
+      "features": [
+        "常绿乔木或灌木；叶条形、常呈两列，先端渐尖。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "常绿乔木或灌木；叶条形、常呈两列，先端渐尖。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p009_01.webp",
+      "images": [
+        "assets/plants/p009_01.webp",
+        "assets/plants/p009_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/三尖杉科/三尖杉_Cephalotaxus fortunei"
+    },
+    {
+      "id": "p010",
+      "name": "翠云草",
+      "latin": "Selaginella uncinata",
+      "labelLatin": "Selaginella uncinata",
+      "family": "卷柏科",
+      "features": [
+        "匍匐蕨类；枝扁平，叶小而密，常有蓝绿色金属光泽。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "匍匐蕨类；枝扁平，叶小而密，常有蓝绿色金属光泽。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p010_01.webp",
+      "images": [
+        "assets/plants/p010_01.webp",
+        "assets/plants/p010_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/卷柏科/翠云草_Selaginella uncinata"
+    },
+    {
+      "id": "p011",
+      "name": "显子草",
+      "latin": "Phaenosperma globosa",
+      "labelLatin": "Phaenosperma globosa",
+      "family": "禾本科",
+      "features": [
+        "多年生草本；叶线状披针形，圆锥花序疏展。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶线状披针形，圆锥花序疏展。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p011_01.webp",
+      "images": [
+        "assets/plants/p011_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/禾本科/显子草_Phaenosperma globosa"
+    },
+    {
+      "id": "p012",
+      "name": "构树",
+      "latin": "Broussonetia papyrifera",
+      "labelLatin": "Broussonetia papyrifera",
+      "family": "桑科",
+      "features": [
+        "乔木；叶互生，形态变化大，常不分裂或3–5裂，叶面粗糙。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "乔木；叶互生，形态变化大，常不分裂或3–5裂，叶面粗糙。",
+      "status": "已确认（含连续照片）",
+      "image": "assets/plants/p012_01.webp",
+      "images": [
+        "assets/plants/p012_01.webp",
+        "assets/plants/p012_02.webp",
+        "assets/plants/p012_03.webp",
+        "assets/plants/p012_04.webp",
+        "assets/plants/p012_05.webp"
+      ],
+      "imageCount": 5,
+      "sourcePath": "按科整理/桑科/构树_Broussonetia papyrifera"
+    },
+    {
+      "id": "p013",
+      "name": "绞股蓝",
+      "latin": "Gynostemma pentaphyllum",
+      "labelLatin": "Gynostemma pentaphyllum",
+      "family": "葫芦科",
+      "features": [
+        "草质攀援藤本；卷须存在，叶通常为鸟足状复叶。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "草质攀援藤本；卷须存在，叶通常为鸟足状复叶。",
+      "status": "已确认（含形态匹配）",
+      "image": "assets/plants/p013_01.webp",
+      "images": [
+        "assets/plants/p013_01.webp",
+        "assets/plants/p013_02.webp",
+        "assets/plants/p013_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/葫芦科/绞股蓝_Gynostemma pentaphyllum"
+    },
+    {
+      "id": "p014",
+      "name": "天目金粟兰",
+      "latin": "Chloranthus tianmushanensis",
+      "labelLatin": "Chloranthus tianmushanensis",
+      "family": "金粟兰科",
+      "features": [
+        "多年生草本；叶对生，穗状花序细长，花小且无明显花被。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶对生，穗状花序细长，花小且无明显花被。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p014_01.webp",
+      "images": [
+        "assets/plants/p014_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/金粟兰科/天目金粟兰_Chloranthus tianmushanensis"
+    },
+    {
+      "id": "p015",
+      "name": "白背叶",
+      "latin": "Mallotus apelta",
+      "labelLatin": "Mallotus apelta",
+      "family": "大戟科",
+      "features": [
+        "灌木或小乔木；叶互生，叶背灰白，常密被星状毛。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "灌木或小乔木；叶互生，叶背灰白，常密被星状毛。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p015_01.webp",
+      "images": [
+        "assets/plants/p015_01.webp",
+        "assets/plants/p015_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/大戟科/白背叶_Mallotus apelta"
+    },
+    {
+      "id": "p016",
+      "name": "半夏",
+      "latin": "Pinellia ternata",
+      "labelLatin": "Pinellia ternata",
+      "family": "天南星科",
+      "features": [
+        "多年生草本；叶常三全裂或三小叶，具地下块茎。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶常三全裂或三小叶，具地下块茎。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p016_01.webp",
+      "images": [
+        "assets/plants/p016_01.webp",
+        "assets/plants/p016_02.webp",
+        "assets/plants/p016_03.webp",
+        "assets/plants/p016_04.webp"
+      ],
+      "imageCount": 4,
+      "sourcePath": "按科整理/天南星科/半夏_Pinellia ternata"
+    },
+    {
+      "id": "p017",
+      "name": "山胡椒",
+      "latin": "Lindera glauca",
+      "labelLatin": "Lindera glauca",
+      "family": "樟科",
+      "features": [
+        "落叶灌木或小乔木；叶互生、全缘，揉搓常有芳香。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶灌木或小乔木；叶互生、全缘，揉搓常有芳香。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p017_01.webp",
+      "images": [
+        "assets/plants/p017_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/樟科/山胡椒_Lindera glauca"
+    },
+    {
+      "id": "p018",
+      "name": "络石",
+      "latin": "Trachelospermum jasminoides",
+      "labelLatin": "Trachelospermum jasminoides",
+      "family": "夹竹桃科",
+      "features": [
+        "常绿木质藤本；叶对生、全缘，折断通常有白色乳汁。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "常绿木质藤本；叶对生、全缘，折断通常有白色乳汁。",
+      "status": "已确认（含形态匹配）",
+      "image": "assets/plants/p018_01.webp",
+      "images": [
+        "assets/plants/p018_01.webp",
+        "assets/plants/p018_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/夹竹桃科/络石_Trachelospermum jasminoides"
+    },
+    {
+      "id": "p019",
+      "name": "南天竹",
+      "latin": "Nandina domestica",
+      "labelLatin": "Nandina domestica",
+      "family": "小檗科",
+      "features": [
+        "常绿灌木；叶为大型二至三回羽状复叶，小叶全缘。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "常绿灌木；叶为大型二至三回羽状复叶，小叶全缘。",
+      "status": "已确认（含形态匹配）",
+      "image": "assets/plants/p019_01.webp",
+      "images": [
+        "assets/plants/p019_01.webp",
+        "assets/plants/p019_02.webp",
+        "assets/plants/p019_03.webp",
+        "assets/plants/p019_04.webp"
+      ],
+      "imageCount": 4,
+      "sourcePath": "按科整理/小檗科/南天竹_Nandina domestica"
+    },
+    {
+      "id": "p020",
+      "name": "榧树（香榧）",
+      "latin": "Torreya grandis",
+      "labelLatin": "Torreya grandis",
+      "family": "红豆杉科",
+      "features": [
+        "常绿乔木；叶条形、质硬，常呈两列；种子核果状。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "常绿乔木；叶条形、质硬，常呈两列；种子核果状。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p020_01.webp",
+      "images": [
+        "assets/plants/p020_01.webp",
+        "assets/plants/p020_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/红豆杉科/榧树（香榧）_Torreya grandis"
+    },
+    {
+      "id": "p021",
+      "name": "凤丫蕨",
+      "latin": "Coniogramme japonica",
+      "labelLatin": "Coniogramme japonica",
+      "family": "凤尾蕨科",
+      "features": [
+        "蕨类；叶片一至二回羽状，羽片较宽，叶脉网状。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "蕨类；叶片一至二回羽状，羽片较宽，叶脉网状。",
+      "status": "已确认（标签＋用户人工核对）",
+      "image": "assets/plants/p021_01.webp",
+      "images": [
+        "assets/plants/p021_01.webp",
+        "assets/plants/p021_02.webp",
+        "assets/plants/p021_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/凤尾蕨科/凤丫蕨_Coniogramme japonica"
+    },
+    {
+      "id": "p022",
+      "name": "薯蓣（山药）",
+      "latin": "Dioscorea polystachya",
+      "labelLatin": "Dioscorea polystachya",
+      "family": "薯蓣科",
+      "features": [
+        "缠绕草质藤本；叶常对生或互生，叶基心形，具弧形脉。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "缠绕草质藤本；叶常对生或互生，叶基心形，具弧形脉。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p022_01.webp",
+      "images": [
+        "assets/plants/p022_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/薯蓣科/薯蓣（山药）_Dioscorea polystachya"
+    },
+    {
+      "id": "p023",
+      "name": "鸭儿芹",
+      "latin": "Cryptotaenia japonica",
+      "labelLatin": "Cryptotaenia japonica",
+      "family": "伞形科",
+      "features": [
+        "多年生草本；叶为三出复叶，叶缘有锯齿，具伞形花序。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶为三出复叶，叶缘有锯齿，具伞形花序。",
+      "status": "已确认（含同标本照片）",
+      "image": "assets/plants/p023_01.webp",
+      "images": [
+        "assets/plants/p023_01.webp",
+        "assets/plants/p023_02.webp",
+        "assets/plants/p023_03.webp",
+        "assets/plants/p023_04.webp",
+        "assets/plants/p023_05.webp",
+        "assets/plants/p023_06.webp"
+      ],
+      "imageCount": 6,
+      "sourcePath": "按科整理/伞形科/鸭儿芹_Cryptotaenia japonica"
+    },
+    {
+      "id": "p024",
+      "name": "油桐",
+      "latin": "Vernicia fordii",
+      "labelLatin": "Vernicia fordii",
+      "family": "大戟科",
+      "features": [
+        "落叶乔木；叶互生、宽卵形或心形，常有掌状脉。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶乔木；叶互生、宽卵形或心形，常有掌状脉。",
+      "status": "已确认（含连续照片）",
+      "image": "assets/plants/p024_01.webp",
+      "images": [
+        "assets/plants/p024_01.webp",
+        "assets/plants/p024_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/大戟科/油桐_Vernicia fordii"
+    },
+    {
+      "id": "p025",
+      "name": "金钱松",
+      "latin": "Pseudolarix amabilis",
+      "labelLatin": "Pseudolarix amabilis",
+      "family": "松科",
+      "features": [
+        "落叶乔木；短枝上的叶簇生呈轮状，叶条形柔软。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶乔木；短枝上的叶簇生呈轮状，叶条形柔软。",
+      "status": "已确认（含形态匹配）",
+      "image": "assets/plants/p025_01.webp",
+      "images": [
+        "assets/plants/p025_01.webp",
+        "assets/plants/p025_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/松科/金钱松_Pseudolarix amabilis"
+    },
+    {
+      "id": "p026",
+      "name": "美洲商陆",
+      "latin": "Phytolacca americana",
+      "labelLatin": "Phytolacca americana",
+      "family": "商陆科",
+      "features": [
+        "高大草本；叶互生、全缘；总状果序，成熟浆果紫黑色。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "高大草本；叶互生、全缘；总状果序，成熟浆果紫黑色。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p026_01.webp",
+      "images": [
+        "assets/plants/p026_01.webp",
+        "assets/plants/p026_02.webp",
+        "assets/plants/p026_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/商陆科/美洲商陆_Phytolacca americana"
+    },
+    {
+      "id": "p027",
+      "name": "石蒜",
+      "latin": "Lycoris radiata",
+      "labelLatin": "Lycoris radiata",
+      "family": "石蒜科",
+      "features": [
+        "多年生球根草本；叶狭带形；花葶独立，伞形花序。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生球根草本；叶狭带形；花葶独立，伞形花序。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p027_01.webp",
+      "images": [
+        "assets/plants/p027_01.webp",
+        "assets/plants/p027_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/石蒜科/石蒜_Lycoris radiata"
+    },
+    {
+      "id": "p028",
+      "name": "中国旌节花",
+      "latin": "Stachyurus chinensis",
+      "labelLatin": "Stachyurus chinensis",
+      "family": "旌节花科",
+      "features": [
+        "落叶灌木；叶互生、具锯齿；总状花序下垂。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶灌木；叶互生、具锯齿；总状花序下垂。",
+      "status": "已确认（含形态匹配）",
+      "image": "assets/plants/p028_01.webp",
+      "images": [
+        "assets/plants/p028_01.webp",
+        "assets/plants/p028_02.webp",
+        "assets/plants/p028_03.webp",
+        "assets/plants/p028_04.webp"
+      ],
+      "imageCount": 4,
+      "sourcePath": "按科整理/旌节花科/中国旌节花_Stachyurus chinensis"
+    },
+    {
+      "id": "p029",
+      "name": "阔叶山麦冬",
+      "latin": "Liriope muscari",
+      "labelLatin": "Liriope muscari",
+      "family": "天门冬科",
+      "features": [
+        "多年生草本；叶基生、带状，花葶直立，具总状花序。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶基生、带状，花葶直立，具总状花序。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p029_01.webp",
+      "images": [
+        "assets/plants/p029_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/天门冬科/阔叶山麦冬_Liriope muscari"
+    },
+    {
+      "id": "p030",
+      "name": "小灯心草",
+      "latin": "Juncus setchuensis",
+      "labelLatin": "Juncus setchuensis",
+      "family": "灯心草科",
+      "features": [
+        "丛生草本；茎细直，叶狭线形，花序由小花簇组成。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "丛生草本；茎细直，叶狭线形，花序由小花簇组成。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p030_01.webp",
+      "images": [
+        "assets/plants/p030_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/灯心草科/小灯心草_Juncus setchuensis"
+    },
+    {
+      "id": "p031",
+      "name": "长柄冷水花",
+      "latin": "Pilea angulata subsp. petiolaris",
+      "labelLatin": "Pilea angulata",
+      "family": "荨麻科",
+      "features": [
+        "草本；叶对生，叶柄较长，叶缘有锯齿，常见三出脉。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "草本；叶对生，叶柄较长，叶缘有锯齿，常见三出脉。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p031_01.webp",
+      "images": [
+        "assets/plants/p031_01.webp",
+        "assets/plants/p031_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/荨麻科/长柄冷水花_Pilea angulata subsp. petiolaris"
+    },
+    {
+      "id": "p032",
+      "name": "八角枫",
+      "latin": "Alangium chinense",
+      "labelLatin": "Alangium chinense",
+      "family": "山茱萸科",
+      "features": [
+        "落叶灌木或小乔木；叶互生、全缘或浅裂，叶基常不对称。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶灌木或小乔木；叶互生、全缘或浅裂，叶基常不对称。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p032_01.webp",
+      "images": [
+        "assets/plants/p032_01.webp",
+        "assets/plants/p032_02.webp",
+        "assets/plants/p032_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/山茱萸科/八角枫_Alangium chinense"
+    },
+    {
+      "id": "p033",
+      "name": "井栏边草",
+      "latin": "Pteris multifida",
+      "labelLatin": "Pteris multifida",
+      "family": "凤尾蕨科",
+      "features": [
+        "蕨类；叶片羽状深裂，叶轴常具翅，孢子囊群沿叶缘分布。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "蕨类；叶片羽状深裂，叶轴常具翅，孢子囊群沿叶缘分布。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p033_01.webp",
+      "images": [
+        "assets/plants/p033_01.webp",
+        "assets/plants/p033_02.webp",
+        "assets/plants/p033_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/凤尾蕨科/井栏边草_Pteris multifida"
+    },
+    {
+      "id": "p034",
+      "name": "苎麻",
+      "latin": "Boehmeria nivea",
+      "labelLatin": "Boehmeria nivea",
+      "family": "荨麻科",
+      "features": [
+        "多年生亚灌木；叶互生，叶背密被白色绒毛，边缘有锯齿。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生亚灌木；叶互生，叶背密被白色绒毛，边缘有锯齿。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p034_01.webp",
+      "images": [
+        "assets/plants/p034_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/荨麻科/苎麻_Boehmeria nivea"
+    },
+    {
+      "id": "p035",
+      "name": "银杏",
+      "latin": "Ginkgo biloba",
+      "labelLatin": "Ginkgo biloba",
+      "family": "银杏科",
+      "features": [
+        "落叶乔木；叶扇形，叶脉二歧分叉。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶乔木；叶扇形，叶脉二歧分叉。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p035_01.webp",
+      "images": [
+        "assets/plants/p035_01.webp",
+        "assets/plants/p035_02.webp",
+        "assets/plants/p035_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/银杏科/银杏_Ginkgo biloba"
+    },
+    {
+      "id": "p036",
+      "name": "海金沙",
+      "latin": "Lygodium japonicum",
+      "labelLatin": "Lygodium japonicum",
+      "family": "海金沙科",
+      "features": [
+        "攀援蕨类；叶轴无限生长呈藤状，羽片多次分裂。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "攀援蕨类；叶轴无限生长呈藤状，羽片多次分裂。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p036_01.webp",
+      "images": [
+        "assets/plants/p036_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/海金沙科/海金沙_Lygodium japonicum"
+    },
+    {
+      "id": "p037",
+      "name": "鹅掌楸",
+      "latin": "Liriodendron chinense",
+      "labelLatin": "Liriodendron chinense",
+      "family": "木兰科",
+      "features": [
+        "落叶乔木；叶先端平截并具裂片，形似马褂。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶乔木；叶先端平截并具裂片，形似马褂。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p037_01.webp",
+      "images": [
+        "assets/plants/p037_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/木兰科/鹅掌楸_Liriodendron chinense"
+    },
+    {
+      "id": "p038",
+      "name": "醉鱼草",
+      "latin": "Buddleja lindleyana",
+      "labelLatin": "Buddleja lindleyana",
+      "family": "玄参科",
+      "features": [
+        "灌木；叶对生、披针形，叶背常灰白；花序穗状或圆锥状。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "灌木；叶对生、披针形，叶背常灰白；花序穗状或圆锥状。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p038_01.webp",
+      "images": [
+        "assets/plants/p038_01.webp",
+        "assets/plants/p038_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/玄参科/醉鱼草_Buddleja lindleyana"
+    },
+    {
+      "id": "p039",
+      "name": "贯众",
+      "latin": "Cyrtomium fortunei",
+      "labelLatin": "Cyrtomium fortunei",
+      "family": "鳞毛蕨科",
+      "features": [
+        "蕨类；叶一回羽状，羽片革质，孢子囊群圆形。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "蕨类；叶一回羽状，羽片革质，孢子囊群圆形。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p039_01.webp",
+      "images": [
+        "assets/plants/p039_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/鳞毛蕨科/贯众_Cyrtomium fortunei"
+    },
+    {
+      "id": "p040",
+      "name": "金线草",
+      "latin": "Persicaria filiformis",
+      "labelLatin": "Antenoron filiforme",
+      "family": "蓼科",
+      "features": [
+        "多年生草本；叶互生，具膜质托叶鞘，穗状花序细长。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶互生，具膜质托叶鞘，穗状花序细长。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p040_01.webp",
+      "images": [
+        "assets/plants/p040_01.webp",
+        "assets/plants/p040_02.webp",
+        "assets/plants/p040_03.webp",
+        "assets/plants/p040_04.webp"
+      ],
+      "imageCount": 4,
+      "sourcePath": "按科整理/蓼科/金线草_Persicaria filiformis"
+    },
+    {
+      "id": "p041",
+      "name": "油茶",
+      "latin": "Camellia oleifera",
+      "labelLatin": "Camellia oleifera",
+      "family": "山茶科",
+      "features": [
+        "常绿灌木或小乔木；叶互生、革质，边缘有细锯齿。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "常绿灌木或小乔木；叶互生、革质，边缘有细锯齿。",
+      "status": "已确认（标签＋用户人工核对）",
+      "image": "assets/plants/p041_01.webp",
+      "images": [
+        "assets/plants/p041_01.webp",
+        "assets/plants/p041_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/山茶科/油茶_Camellia oleifera"
+    },
+    {
+      "id": "p042",
+      "name": "江南卷柏",
+      "latin": "Selaginella moellendorffii",
+      "labelLatin": "Selaginella moellendorffii",
+      "family": "卷柏科",
+      "features": [
+        "石松类；茎匍匐或斜升，枝扁平，鳞片状小叶密生。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "石松类；茎匍匐或斜升，枝扁平，鳞片状小叶密生。",
+      "status": "已确认（含形态匹配）",
+      "image": "assets/plants/p042_01.webp",
+      "images": [
+        "assets/plants/p042_01.webp",
+        "assets/plants/p042_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/卷柏科/江南卷柏_Selaginella moellendorffii"
+    },
+    {
+      "id": "p043",
+      "name": "常春藤",
+      "latin": "Hedera sinensis",
+      "labelLatin": "",
+      "family": "五加科",
+      "features": [
+        "常绿攀援藤本；叶互生，幼枝叶常呈三角状卵形或浅裂。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "常绿攀援藤本；叶互生，幼枝叶常呈三角状卵形或浅裂。",
+      "status": "已确认（用户人工核对）",
+      "image": "assets/plants/p043_01.webp",
+      "images": [
+        "assets/plants/p043_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/五加科/常春藤_Hedera sinensis"
+    },
+    {
+      "id": "p044",
+      "name": "一年蓬",
+      "latin": "Erigeron annuus",
+      "labelLatin": "",
+      "family": "菊科",
+      "features": [
+        "一年生或二年生草本；茎上部分枝，叶互生；具多个小型头状花序。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "一年生或二年生草本；茎上部分枝，叶互生；具多个小型头状花序。",
+      "status": "已确认（用户人工核对）",
+      "image": "assets/plants/p044_01.webp",
+      "images": [
+        "assets/plants/p044_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/菊科/一年蓬_Erigeron annuus"
+    },
+    {
+      "id": "p045",
+      "name": "杉木",
+      "latin": "Cunninghamia lanceolata",
+      "labelLatin": "Cunninghamia lanceolata",
+      "family": "柏科",
+      "features": [
+        "常绿乔木；叶披针形、质硬，螺旋状排列，先端尖。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "常绿乔木；叶披针形、质硬，螺旋状排列，先端尖。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p045_01.webp",
+      "images": [
+        "assets/plants/p045_01.webp",
+        "assets/plants/p045_02.webp",
+        "assets/plants/p045_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/柏科/杉木_Cunninghamia lanceolata"
+    },
+    {
+      "id": "p046",
+      "name": "江南龙胆",
+      "latin": "",
+      "labelLatin": "",
+      "family": "龙胆科",
+      "features": [
+        "草本；叶对生、全缘，花通常筒状；本照片标签只写中文名。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "草本；叶对生、全缘，花通常筒状；本照片标签只写中文名。",
+      "status": "部分确认（中文名/科名）",
+      "image": "assets/plants/p046_01.webp",
+      "images": [
+        "assets/plants/p046_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/龙胆科/江南龙胆_学名待确认"
+    },
+    {
+      "id": "p047",
+      "name": "野珠兰",
+      "latin": "Neillia hanceana",
+      "labelLatin": "Stephanandra chinensis",
+      "family": "蔷薇科",
+      "features": [
+        "灌木；叶互生、有锯齿，圆锥花序具小花。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "灌木；叶互生、有锯齿，圆锥花序具小花。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p047_01.webp",
+      "images": [
+        "assets/plants/p047_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/蔷薇科/野珠兰_Neillia hanceana"
+    },
+    {
+      "id": "p048",
+      "name": "鸭跖草",
+      "latin": "Commelina communis",
+      "labelLatin": "Commelina communis",
+      "family": "鸭跖草科",
+      "features": [
+        "一年生草本；茎匍匐或斜升，叶卵状披针形、叶基成鞘，花序具佛焰苞状总苞。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "一年生草本；茎匍匐或斜升，叶卵状披针形、叶基成鞘，花序具佛焰苞状总苞。",
+      "status": "已确认（用户人工核对）",
+      "image": "assets/plants/p048_01.webp",
+      "images": [
+        "assets/plants/p048_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/鸭跖草科/鸭跖草_Commelina communis"
+    },
+    {
+      "id": "p049",
+      "name": "柘木",
+      "latin": "Maclura tricuspidata",
+      "labelLatin": "",
+      "family": "桑科",
+      "features": [
+        "灌木或小乔木；叶互生、卵形至椭圆形，腋部可见近球形花序或果实。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "灌木或小乔木；叶互生、卵形至椭圆形，腋部可见近球形花序或果实。",
+      "status": "已确认（用户人工核对）",
+      "image": "assets/plants/p049_01.webp",
+      "images": [
+        "assets/plants/p049_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/桑科/柘木_Maclura tricuspidata"
+    },
+    {
+      "id": "p050",
+      "name": "九头狮子草",
+      "latin": "Dicliptera japonica",
+      "labelLatin": "Peristrophe japonica",
+      "family": "爵床科",
+      "features": [
+        "多年生草本；叶对生，花常簇生于枝端或叶腋，花冠二唇形。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶对生，花常簇生于枝端或叶腋，花冠二唇形。",
+      "status": "已确认（标签＋用户人工核对）",
+      "image": "assets/plants/p050_01.webp",
+      "images": [
+        "assets/plants/p050_01.webp",
+        "assets/plants/p050_02.webp",
+        "assets/plants/p050_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/爵床科/九头狮子草_Dicliptera japonica"
+    },
+    {
+      "id": "p051",
+      "name": "蔷薇科物种待确认",
+      "latin": "",
+      "labelLatin": "",
+      "family": "蔷薇科",
+      "features": [
+        "枝叶标本；标签科名可辨为蔷薇科，但中文种名与学名不清。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "枝叶标本；标签科名可辨为蔷薇科，但中文种名与学名不清。",
+      "status": "部分确认（仅科名）",
+      "image": "assets/plants/p051_01.webp",
+      "images": [
+        "assets/plants/p051_01.webp",
+        "assets/plants/p051_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/蔷薇科/蔷薇科物种待确认_学名待确认"
+    },
+    {
+      "id": "p052",
+      "name": "扶芳藤",
+      "latin": "Euonymus fortunei",
+      "labelLatin": "Euonymus fortunei",
+      "family": "卫矛科",
+      "features": [
+        "常绿攀援灌木；叶对生、革质，边缘有细锯齿。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "常绿攀援灌木；叶对生、革质，边缘有细锯齿。",
+      "status": "已确认（含连续照片）",
+      "image": "assets/plants/p052_01.webp",
+      "images": [
+        "assets/plants/p052_01.webp",
+        "assets/plants/p052_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/卫矛科/扶芳藤_Euonymus fortunei"
+    },
+    {
+      "id": "p053",
+      "name": "青灰叶下珠",
+      "latin": "Phyllanthus glaucus",
+      "labelLatin": "Phyllanthus glaucus",
+      "family": "叶下珠科",
+      "features": [
+        "灌木；小枝常呈羽状，叶互生而二列排列，果生于叶腋。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "灌木；小枝常呈羽状，叶互生而二列排列，果生于叶腋。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p053_01.webp",
+      "images": [
+        "assets/plants/p053_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/叶下珠科/青灰叶下珠_Phyllanthus glaucus"
+    },
+    {
+      "id": "p054",
+      "name": "山核桃",
+      "latin": "Carya cathayensis",
+      "labelLatin": "Carya cathayensis",
+      "family": "胡桃科",
+      "features": [
+        "落叶乔木；奇数羽状复叶，小叶有锯齿；果近球形。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶乔木；奇数羽状复叶，小叶有锯齿；果近球形。",
+      "status": "已确认（标签＋用户人工核对）",
+      "image": "assets/plants/p054_01.webp",
+      "images": [
+        "assets/plants/p054_01.webp",
+        "assets/plants/p054_02.webp",
+        "assets/plants/p054_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/胡桃科/山核桃_Carya cathayensis"
+    },
+    {
+      "id": "p055",
+      "name": "猕猴桃",
+      "latin": "Actinidia chinensis",
+      "labelLatin": "Actinidia chinensis",
+      "family": "猕猴桃科",
+      "features": [
+        "木质藤本；叶互生、宽卵形，叶背常被毛。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "木质藤本；叶互生、宽卵形，叶背常被毛。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p055_01.webp",
+      "images": [
+        "assets/plants/p055_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/猕猴桃科/猕猴桃_Actinidia chinensis"
+    },
+    {
+      "id": "p056",
+      "name": "过路黄",
+      "latin": "Lysimachia christinae",
+      "labelLatin": "Lysimachia christinae",
+      "family": "报春花科",
+      "features": [
+        "匍匐草本；叶对生、近圆形，黄色花单生叶腋。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "匍匐草本；叶对生、近圆形，黄色花单生叶腋。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p056_01.webp",
+      "images": [
+        "assets/plants/p056_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/报春花科/过路黄_Lysimachia christinae"
+    },
+    {
+      "id": "p057",
+      "name": "化香树",
+      "latin": "Platycarya strobilacea",
+      "labelLatin": "Platycarya strobilacea",
+      "family": "胡桃科",
+      "features": [
+        "落叶乔木；奇数羽状复叶，果序呈紧密穗状或球果状。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶乔木；奇数羽状复叶，果序呈紧密穗状或球果状。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p057_01.webp",
+      "images": [
+        "assets/plants/p057_01.webp",
+        "assets/plants/p057_02.webp",
+        "assets/plants/p057_03.webp"
+      ],
+      "imageCount": 3,
+      "sourcePath": "按科整理/胡桃科/化香树_Platycarya strobilacea"
+    },
+    {
+      "id": "p058",
+      "name": "青榨槭",
+      "latin": "Acer davidii",
+      "labelLatin": "Acer davidii",
+      "family": "无患子科",
+      "features": [
+        "乔木；叶对生、卵形，常具三出脉；双翅果成对。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "乔木；叶对生、卵形，常具三出脉；双翅果成对。",
+      "status": "已确认（含形态匹配）",
+      "image": "assets/plants/p058_01.webp",
+      "images": [
+        "assets/plants/p058_01.webp",
+        "assets/plants/p058_02.webp",
+        "assets/plants/p058_03.webp",
+        "assets/plants/p058_04.webp"
+      ],
+      "imageCount": 4,
+      "sourcePath": "按科整理/无患子科/青榨槭_Acer davidii"
+    },
+    {
+      "id": "p059",
+      "name": "秤锤树",
+      "latin": "Sinojackia xylocarpa",
+      "labelLatin": "Sinojackia xylocarpa",
+      "family": "安息香科",
+      "features": [
+        "落叶小乔木；叶互生、有锯齿；果实木质并具长果梗，形似秤锤。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶小乔木；叶互生、有锯齿；果实木质并具长果梗，形似秤锤。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p059_01.webp",
+      "images": [
+        "assets/plants/p059_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/安息香科/秤锤树_Sinojackia xylocarpa"
+    },
+    {
+      "id": "p060",
+      "name": "奇蒿",
+      "latin": "Artemisia anomala",
+      "labelLatin": "",
+      "family": "菊科",
+      "features": [
+        "多年生草本；叶互生、卵状披针形，边缘有锯齿；圆锥状花序多分枝。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶互生、卵状披针形，边缘有锯齿；圆锥状花序多分枝。",
+      "status": "已确认（用户人工核对）",
+      "image": "assets/plants/p060_01.webp",
+      "images": [
+        "assets/plants/p060_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/菊科/奇蒿_Artemisia anomala"
+    },
+    {
+      "id": "p061",
+      "name": "木通",
+      "latin": "Akebia quinata",
+      "labelLatin": "",
+      "family": "木通科",
+      "features": [
+        "木质藤本；掌状复叶通常具5枚小叶，小叶全缘，叶柄细长。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "木质藤本；掌状复叶通常具5枚小叶，小叶全缘，叶柄细长。",
+      "status": "已确认（用户人工核对）",
+      "image": "assets/plants/p061_01.webp",
+      "images": [
+        "assets/plants/p061_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/木通科/木通_Akebia quinata"
+    },
+    {
+      "id": "p062",
+      "name": "节节草",
+      "latin": "Equisetum ramosissimum",
+      "labelLatin": "Equisetum ramosissimum",
+      "family": "木贼科",
+      "features": [
+        "多年生蕨类；茎中空、有明显节和纵棱，枝轮生或不分枝。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生蕨类；茎中空、有明显节和纵棱，枝轮生或不分枝。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p062_01.webp",
+      "images": [
+        "assets/plants/p062_01.webp",
+        "assets/plants/p062_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/木贼科/节节草_Equisetum ramosissimum"
+    },
+    {
+      "id": "p063",
+      "name": "鱼腥草",
+      "latin": "Houttuynia cordata",
+      "labelLatin": "Houttuynia cordata",
+      "family": "三白草科",
+      "features": [
+        "多年生草本；叶心形、互生，揉搓有特殊气味；穗状花序具白色苞片。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶心形、互生，揉搓有特殊气味；穗状花序具白色苞片。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p063_01.webp",
+      "images": [
+        "assets/plants/p063_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/三白草科/鱼腥草_Houttuynia cordata"
+    },
+    {
+      "id": "p064",
+      "name": "龙牙草",
+      "latin": "Agrimonia pilosa",
+      "labelLatin": "",
+      "family": "蔷薇科",
+      "features": [
+        "多年生草本；奇数羽状复叶，小叶大小相间，边缘具粗锯齿，茎叶有毛。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；奇数羽状复叶，小叶大小相间，边缘具粗锯齿，茎叶有毛。",
+      "status": "已确认（用户人工核对）",
+      "image": "assets/plants/p064_01.webp",
+      "images": [
+        "assets/plants/p064_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/蔷薇科/龙牙草_Agrimonia pilosa"
+    },
+    {
+      "id": "p065",
+      "name": "天目铁木",
+      "latin": "Ostrya rehderiana",
+      "labelLatin": "",
+      "family": "桦木科",
+      "features": [
+        "落叶乔木；叶互生、卵形至椭圆形，边缘重锯齿，侧脉平行而明显。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "落叶乔木；叶互生、卵形至椭圆形，边缘重锯齿，侧脉平行而明显。",
+      "status": "已确认（用户人工核对）",
+      "image": "assets/plants/p065_01.webp",
+      "images": [
+        "assets/plants/p065_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/桦木科/天目铁木_Ostrya rehderiana"
+    },
+    {
+      "id": "p066",
+      "name": "兔儿伞",
+      "latin": "Syneilesis aconitifolia",
+      "labelLatin": "",
+      "family": "菊科",
+      "features": [
+        "多年生草本；叶片掌状深裂，裂片向外辐射，叶柄较长。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶片掌状深裂，裂片向外辐射，叶柄较长。",
+      "status": "已确认（用户人工核对）",
+      "image": "assets/plants/p066_01.webp",
+      "images": [
+        "assets/plants/p066_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/菊科/兔儿伞_Syneilesis aconitifolia"
+    },
+    {
+      "id": "p067",
+      "name": "萱草",
+      "latin": "",
+      "labelLatin": "",
+      "family": "天门冬科",
+      "features": [
+        "多年生草本；叶基生、狭带形，花葶无叶。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "多年生草本；叶基生、狭带形，花葶无叶。",
+      "status": "部分确认（中文名/科名）",
+      "image": "assets/plants/p067_01.webp",
+      "images": [
+        "assets/plants/p067_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/天门冬科/萱草_学名待确认"
+    },
+    {
+      "id": "p068",
+      "name": "金缕梅科物种待确认",
+      "latin": "",
+      "labelLatin": "",
+      "family": "金缕梅科",
+      "features": [
+        "木本枝叶标本；标签科名可辨为金缕梅科，种名手写不清。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "木本枝叶标本；标签科名可辨为金缕梅科，种名手写不清。",
+      "status": "部分确认（仅科名）",
+      "image": "assets/plants/p068_01.webp",
+      "images": [
+        "assets/plants/p068_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/金缕梅科/金缕梅科物种待确认_学名待确认"
+    },
+    {
+      "id": "p069",
+      "name": "委陵菜",
+      "latin": "",
+      "labelLatin": "",
+      "family": "蔷薇科",
+      "features": [
+        "草本；叶多为羽状或掌状复叶，叶缘有锯齿。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "草本；叶多为羽状或掌状复叶，叶缘有锯齿。",
+      "status": "部分确认（中文名/科名）",
+      "image": "assets/plants/p069_01.webp",
+      "images": [
+        "assets/plants/p069_01.webp"
+      ],
+      "imageCount": 1,
+      "sourcePath": "按科整理/蔷薇科/委陵菜_学名待确认"
+    },
+    {
+      "id": "p070",
+      "name": "异叶爬山虎",
+      "latin": "Parthenocissus heterophylla",
+      "labelLatin": "Parthenocissus heterophylla",
+      "family": "葡萄科",
+      "features": [
+        "木质藤本；卷须与叶对生，叶形变化较大，常为三出或掌状复叶。",
+        "结合标本照片观察叶形、叶序、叶缘、茎枝或花果等可见结构。"
+      ],
+      "description": "木质藤本；卷须与叶对生，叶形变化较大，常为三出或掌状复叶。",
+      "status": "已确认（标签）",
+      "image": "assets/plants/p070_01.webp",
+      "images": [
+        "assets/plants/p070_01.webp",
+        "assets/plants/p070_02.webp"
+      ],
+      "imageCount": 2,
+      "sourcePath": "按科整理/葡萄科/异叶爬山虎_Parthenocissus heterophylla"
+    }
   ]
 };
