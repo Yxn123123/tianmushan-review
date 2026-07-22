@@ -10,7 +10,17 @@ const store = {
   set(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 };
 
-let state = { route: 'home', quiz: null };
+let state = {
+  route: 'home',
+  quiz: null,
+  listFilters: { bird: '', insect: '' },
+  listIds: {
+    bird: D.birds.map(x => x.id),
+    insect: D.insects.map(x => x.id)
+  },
+  detail: null,
+  restoring: false
+};
 const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[m]));
@@ -50,17 +60,86 @@ function removeMistake(kind, id) {
 function stopAudio() {
   document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
 }
-function route(r) {
+function listFor(kind) {
+  const all = kind === 'bird' ? D.birds : D.insects;
+  const ids = state.listIds?.[kind] || all.map(x => x.id);
+  const byId = new Map(all.map(x => [x.id, x]));
+  const list = ids.map(id => byId.get(id)).filter(Boolean);
+  return list.length ? list : all;
+}
+function getItem(kind, id) {
+  return (kind === 'bird' ? D.birds : D.insects).find(v => v.id === id);
+}
+function detailHash(kind, id) {
+  return `#${kind === 'bird' ? 'birds' : 'insects'}/${encodeURIComponent(id)}`;
+}
+function routeHash(r) {
+  return r === 'home' ? '#home' : `#${r}`;
+}
+function pushLocation() {
+  if (state.restoring) return;
+  const hash = state.detail ? detailHash(state.detail.kind, state.detail.id) : routeHash(state.route);
+  history.pushState({
+    route: state.route,
+    detail: state.detail,
+    listFilters: state.listFilters,
+    listIds: state.listIds
+  }, '', hash);
+}
+function replaceLocation() {
+  const hash = state.detail ? detailHash(state.detail.kind, state.detail.id) : routeHash(state.route);
+  history.replaceState({
+    route: state.route,
+    detail: state.detail,
+    listFilters: state.listFilters,
+    listIds: state.listIds
+  }, '', hash);
+}
+function restoreFromLocation() {
+  const hash = decodeURIComponent(location.hash.replace(/^#/, ''));
+  if (!hash) return;
+  const [path] = hash.split('?');
+  const [routeName, id] = path.split('/');
+  const kind = routeName === 'birds' ? 'bird' : routeName === 'insects' ? 'insect' : null;
+  state.restoring = true;
+  if (kind && id && getItem(kind, id)) {
+    state.route = routeName;
+    state.detail = { kind, id };
+  } else if (['home', 'birds', 'insects', 'sounds', 'quiz', 'mistakes'].includes(routeName)) {
+    state.route = routeName;
+    state.detail = null;
+    state.quiz = null;
+  }
+  render();
+  state.restoring = false;
+}
+function route(r, push = true) {
   stopAudio();
   state.route = r;
   state.quiz = null;
+  state.detail = null;
   render();
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.route === r));
+  if (push) pushLocation();
   scrollTo({ top: 0, behavior: 'smooth' });
 }
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-route]');
   if (b) route(b.dataset.route);
+});
+window.addEventListener('popstate', e => {
+  state.restoring = true;
+  if (e.state) {
+    state.route = e.state.route || 'home';
+    state.detail = e.state.detail || null;
+    state.listFilters = e.state.listFilters || state.listFilters;
+    state.listIds = e.state.listIds || state.listIds;
+    state.quiz = null;
+    render();
+  } else {
+    restoreFromLocation();
+  }
+  state.restoring = false;
 });
 
 function home() {
@@ -94,10 +173,13 @@ function home() {
 }
 
 function cards(kind) {
-  const list = kind === 'bird' ? D.birds : D.insects;
+  const fullList = kind === 'bird' ? D.birds : D.insects;
+  const q = state.listFilters[kind] || '';
+  const list = q ? fullList.filter(x => norm(JSON.stringify(x)).includes(norm(q))) : fullList;
+  state.listIds[kind] = list.map(x => x.id);
   const title = kind === 'bird' ? '鸟类复习' : '昆虫复习';
   const sub = kind === 'bird' ? '57种鸟：每种集中展示对应PPT页面的全部图片，练习时随机抽图' : '14个目：优先掌握标本上能直接看到的结构';
-  return `<div class="section-head"><div><h2>${title}</h2><p>${sub}</p></div><input id="search" class="search" placeholder="搜索名称、科或目……"></div><div class="grid" id="cardgrid">${list.map(x => card(kind, x)).join('')}</div>`;
+  return `<div class="section-head"><div><h2>${title}</h2><p>${sub}</p></div><input id="search" class="search" value="${esc(q)}" placeholder="搜索名称、科或目……"></div><div class="grid" id="cardgrid">${list.map(x => card(kind, x)).join('')}</div>`;
 }
 function card(kind, x) {
   const count = kind === 'bird' ? imagesOf(x).length : 1;
@@ -109,6 +191,8 @@ function setupSearch(kind) {
   input.oninput = () => {
     const q = norm(input.value);
     const list = (kind === 'bird' ? D.birds : D.insects).filter(x => norm(JSON.stringify(x)).includes(q));
+    state.listFilters[kind] = input.value;
+    state.listIds[kind] = list.map(x => x.id);
     document.querySelector('#cardgrid').innerHTML = list.map(x => card(kind, x)).join('') || '<div class="empty">没有找到匹配内容</div>';
   };
 }
@@ -144,11 +228,53 @@ window.closeImageZoom = (event, force = false) => {
   if (force || event.target.id === 'image-zoom') document.querySelector('#image-zoom')?.remove();
 };
 
-window.openCard = (kind, id) => {
-  const x = (kind === 'bird' ? D.birds : D.insects).find(v => v.id === id);
+function detailNav(kind, id, position) {
+  const list = listFor(kind);
+  const index = list.findIndex(x => x.id === id);
+  const prev = index > 0 ? list[index - 1] : null;
+  const next = index >= 0 && index < list.length - 1 ? list[index + 1] : null;
+  const prevLabel = kind === 'bird' ? '上一种' : '上一目';
+  const nextLabel = kind === 'bird' ? '下一种' : '下一目';
+  const backLabel = kind === 'bird' ? '返回鸟类列表' : '返回昆虫列表';
+  return `<nav class="detail-nav detail-nav-${position}" aria-label="${kind === 'bird' ? '鸟类' : '昆虫'}详情切换">
+    <button class="detail-nav-btn prev" ${prev ? `onclick="switchDetail('${kind}','${prev.id}')"` : 'disabled'} title="${prev ? `${prevLabel}：${esc(prev.name)}` : `没有${prevLabel}`}">← <span>${prevLabel}：</span><b>${prev ? esc(prev.name) : '无'}</b></button>
+    <button class="detail-nav-btn back" onclick="backToList('${kind}')">${backLabel}</button>
+    <button class="detail-nav-btn next" ${next ? `onclick="switchDetail('${kind}','${next.id}')"` : 'disabled'} title="${next ? `${nextLabel}：${esc(next.name)}` : `没有${nextLabel}`}"><span>${nextLabel}：</span><b>${next ? esc(next.name) : '无'}</b> →</button>
+  </nav>`;
+}
+function detailBody(kind, x) {
+  const isBird = kind === 'bird';
+  return `<button class="modal-close" onclick="closeModal()">×</button><div class="modal-card" id="detail-card">
+    ${detailNav(kind, x.id, 'top')}
+    ${isBird ? birdGallery(x) : `<img class="modal-hero" src="${x.image}" alt="${x.name}">`}
+    <div class="modal-content"><div class="meta">${isBird ? `${x.order} · ${x.family}` : x.latin}</div><h2>${x.name}</h2><h3>${isBird ? 'PPT红字优先的两处特征' : '考试优先写的两处特征'}</h3><div class="feature-list">${x.features.map((f, i) => `<div class="feature">${i + 1}. ${esc(f)}</div>`).join('')}</div>${isBird ? `<p class="meta feature-basis">特征依据：${esc(x.featureBasis || 'PPT红字优先')}</p>` : ''}${isBird ? `<h3>资料说明</h3><p>${esc(x.description) || 'PPT未提供文字说明，可重点依据图片记忆。'}</p><p class="meta">以上${imagesOf(x).length}张图片全部提取自本种对应的PPT第${x.slide}页；二维码等非鸟类小图未纳入。</p>` : `<h3>进一步确认</h3><p>${x.extra.map(esc).join('；')}。</p>`}<div class="answer-row"><button class="btn" onclick="startSingle('${kind}','${x.id}')">随机抽一张练习</button></div></div>
+    ${detailNav(kind, x.id, 'bottom')}
+    ${detailNav(kind, x.id, 'sticky')}
+  </div>`;
+}
+window.openCard = (kind, id, push = true) => {
+  const x = getItem(kind, id);
+  if (!x) return;
+  state.route = kind === 'bird' ? 'birds' : 'insects';
+  state.detail = { kind, id };
   modal.classList.remove('hidden');
   modal.setAttribute('aria-hidden', 'false');
-  modal.innerHTML = `<button class="modal-close" onclick="closeModal()">×</button><div class="modal-card">${kind === 'bird' ? birdGallery(x) : `<img class="modal-hero" src="${x.image}" alt="${x.name}">`}<div class="modal-content"><div class="meta">${kind === 'bird' ? `${x.order} · ${x.family}` : x.latin}</div><h2>${x.name}</h2><h3>${kind === 'bird' ? 'PPT红字优先的两处特征' : '考试优先写的两处特征'}</h3><div class="feature-list">${x.features.map((f, i) => `<div class="feature">${i + 1}. ${esc(f)}</div>`).join('')}</div>${kind === 'bird' ? `<p class="meta feature-basis">特征依据：${esc(x.featureBasis || 'PPT红字优先')}</p>` : ''}${kind === 'bird' ? `<h3>资料说明</h3><p>${esc(x.description) || 'PPT未提供文字说明，可重点依据图片记忆。'}</p><p class="meta">以上${imagesOf(x).length}张图片全部提取自本种对应的PPT第${x.slide}页；二维码等非鸟类小图未纳入。</p>` : `<h3>进一步确认</h3><p>${x.extra.map(esc).join('；')}。</p>`}<div class="answer-row"><button class="btn" onclick="startSingle('${kind}','${id}')">随机抽一张练习</button></div></div></div>`;
+  modal.innerHTML = detailBody(kind, x);
+  document.querySelector('#detail-card')?.scrollTo({ top: 0, behavior: 'smooth' });
+  if (push) pushLocation();
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.route === state.route));
+};
+window.switchDetail = (kind, id, push = true) => {
+  const x = getItem(kind, id);
+  if (!x || !state.detail || state.detail.kind !== kind) return;
+  state.detail = { kind, id };
+  modal.innerHTML = detailBody(kind, x);
+  document.querySelector('#detail-card')?.scrollTo({ top: 0, behavior: 'smooth' });
+  if (push) pushLocation();
+};
+window.backToList = kind => {
+  closeModal(false);
+  route(kind === 'bird' ? 'birds' : 'insects');
 };
 window.openSoundCard = id => {
   const x = D.sounds.find(v => v.id === id);
@@ -156,13 +282,31 @@ window.openSoundCard = id => {
   modal.setAttribute('aria-hidden', 'false');
   modal.innerHTML = `<button class="modal-close" onclick="closeModal()">×</button><div class="modal-card"><img class="modal-hero sound-photo" src="${x.image}" alt="${x.name}"><div class="modal-content"><div class="meta">${x.note}</div><h2>${x.name}</h2><p><b>${x.order}｜${x.family}</b></p><audio class="detail-audio" controls preload="metadata" src="${x.audio}">浏览器不支持音频播放。</audio><div class="answer-row"><button class="btn" onclick="startSingle('sound','${id}')">练这一声</button><button class="btn ghost" onclick="openCard('bird','${x.birdId}')">查看图片识别特征</button></div></div></div>`;
 };
-window.closeModal = () => {
+window.closeModal = (push = true) => {
   stopAudio();
   modal.classList.add('hidden');
   modal.innerHTML = '';
   document.querySelector('#image-zoom')?.remove();
+  if (state.detail) {
+    const r = state.detail.kind === 'bird' ? 'birds' : 'insects';
+    state.detail = null;
+    state.route = r;
+    if (push) pushLocation();
+  }
 };
 modal.onclick = e => { if (e.target === modal) closeModal(); };
+document.addEventListener('keydown', e => {
+  if (!state.detail || modal.classList.contains('hidden')) return;
+  if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+  const tag = document.activeElement?.tagName?.toLowerCase();
+  if (['input', 'textarea', 'select'].includes(tag) || document.activeElement?.isContentEditable) return;
+  const list = listFor(state.detail.kind);
+  const index = list.findIndex(x => x.id === state.detail.id);
+  const target = e.key === 'ArrowLeft' ? list[index - 1] : list[index + 1];
+  if (!target) return;
+  e.preventDefault();
+  switchDetail(state.detail.kind, target.id);
+});
 
 function quizMenu() {
   return `<div class="section-head"><div><h2>选择练习</h2><p>图片来自课程PPT/PDF，鸟声来自课程“卷用鸟声”文件夹。</p></div></div>
@@ -318,5 +462,17 @@ function render() {
   else if (state.route === 'sounds') { app.innerHTML = soundCards(); setupSoundSearch(); }
   else if (state.route === 'quiz') app.innerHTML = quizView();
   else if (state.route === 'mistakes') app.innerHTML = mistakesView();
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.route === state.route));
+  if (state.detail) openCard(state.detail.kind, state.detail.id, false);
+  else if (modal.querySelector('#detail-card')) {
+    stopAudio();
+    modal.classList.add('hidden');
+    modal.innerHTML = '';
+    document.querySelector('#image-zoom')?.remove();
+  }
 }
-render();
+if (location.hash) restoreFromLocation();
+else {
+  render();
+  replaceLocation();
+}
