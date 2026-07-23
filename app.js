@@ -13,6 +13,7 @@ const store = {
 let state = {
   route: 'home',
   quiz: null,
+  plantEditMode: false,
   listFilters: { bird: '', insect: '', plant: '' },
   listIds: {
     bird: D.birds.map(x => x.id),
@@ -27,11 +28,61 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
 }[m]));
 const norm = s => String(s || '').replace(/[\s·，,。；;（）()]/g, '').toLowerCase();
 const shuffle = a => [...a].sort(() => Math.random() - .5);
+const imagesOfRaw = x => (Array.isArray(x?.images) && x.images.length ? x.images : [x?.image]).filter(Boolean);
 const imagesOf = x => (Array.isArray(x?.images) && x.images.length ? x.images : [x?.image]).filter(Boolean);
+const BASE_PLANTS = D.plants.map(x => ({
+  ...x,
+  images: imagesOfRaw(x),
+  features: [...(x.features || [])],
+  extra: x.extra ? [...x.extra] : x.extra
+}));
 const pickImage = x => {
   const imgs = imagesOf(x);
   return imgs[Math.floor(Math.random() * imgs.length)] || x.image;
 };
+
+function plantEdits() {
+  const e = store.get('plantEdits', { hiddenImages: {}, updates: {}, customPlants: [] });
+  e.hiddenImages ||= {};
+  e.updates ||= {};
+  e.customPlants ||= [];
+  return e;
+}
+function cleanPlant(x) {
+  const images = imagesOfRaw(x);
+  return {
+    id: String(x.id || `custom-${Date.now()}`),
+    name: String(x.name || '未命名植物'),
+    latin: String(x.latin || x.labelLatin || ''),
+    labelLatin: String(x.labelLatin || x.latin || ''),
+    family: String(x.family || ''),
+    order: String(x.order || ''),
+    image: images[0] || '',
+    images,
+    features: (x.features || []).filter(Boolean).slice(0, 4),
+    description: String(x.description || ''),
+    status: String(x.status || '本地新增')
+  };
+}
+function syncPlantData() {
+  const edits = plantEdits();
+  const base = BASE_PLANTS.map(x => {
+    const patch = edits.updates[x.id] || {};
+    const merged = cleanPlant({ ...x, ...patch, images: patch.images || x.images });
+    const hidden = new Set(edits.hiddenImages[x.id] || []);
+    const imgs = imagesOfRaw(merged).filter(src => !hidden.has(src));
+    return { ...merged, images: imgs, image: imgs[0] || merged.image };
+  });
+  const custom = edits.customPlants.map(cleanPlant);
+  D.plants = [...base, ...custom];
+  state.listIds.plant = state.listIds.plant.filter(id => D.plants.some(x => x.id === id));
+  if (!state.listIds.plant.length) state.listIds.plant = D.plants.map(x => x.id);
+}
+function savePlantEdits(edits) {
+  store.set('plantEdits', edits);
+  syncPlantData();
+}
+syncPlantData();
 
 function progress() {
   const p = store.get('progress', { birds: [], insects: [], sounds: [], plants: [] });
@@ -178,13 +229,14 @@ function home() {
 }
 
 function cards(kind) {
+  if (kind === 'plant') syncPlantData();
   const fullList = kind === 'bird' ? D.birds : kind === 'plant' ? D.plants : D.insects;
   const q = state.listFilters[kind] || '';
   const list = q ? fullList.filter(x => norm(JSON.stringify(x)).includes(norm(q))) : fullList;
   state.listIds[kind] = list.map(x => x.id);
   const title = kind === 'bird' ? '鸟类复习' : kind === 'plant' ? '植物标本复习' : '昆虫复习';
   const sub = kind === 'bird' ? '57种鸟：每种集中展示对应PPT页面的全部图片，练习时随机抽图' : kind === 'plant' ? '70个植物标本分组：看标本图，掌握种名、科名和两处可见特征' : '14个目：优先掌握标本上能直接看到的结构';
-  return `<div class="section-head"><div><h2>${title}</h2><p>${sub}</p></div><input id="search" class="search" value="${esc(q)}" placeholder="搜索名称、科或目……"></div><div class="grid" id="cardgrid">${list.map(x => card(kind, x)).join('')}</div>`;
+  return `<div class="section-head"><div><h2>${title}</h2><p>${sub}</p></div><input id="search" class="search" value="${esc(q)}" placeholder="搜索名称、科或目……"></div>${kind === 'plant' ? plantEditTools() : ''}<div class="grid" id="cardgrid">${list.map(x => card(kind, x)).join('')}</div>`;
 }
 function card(kind, x) {
   const count = (kind === 'bird' || kind === 'plant') ? imagesOf(x).length : 1;
@@ -203,6 +255,21 @@ function setupSearch(kind) {
     state.listIds[kind] = list.map(x => x.id);
     document.querySelector('#cardgrid').innerHTML = list.map(x => card(kind, x)).join('') || '<div class="empty">没有找到匹配内容</div>';
   };
+}
+
+function plantEditTools() {
+  const edits = plantEdits();
+  const hiddenCount = Object.values(edits.hiddenImages).reduce((n, arr) => n + arr.length, 0);
+  return `<section class="edit-panel ${state.plantEditMode ? 'active' : ''}">
+    <div><b>植物资料编辑</b><p>当前本地新增 ${edits.customPlants.length} 个标本，隐藏 ${hiddenCount} 张图片。</p></div>
+    <div class="edit-actions">
+      <button class="btn small ${state.plantEditMode ? 'warn' : 'ghost'}" onclick="togglePlantEditMode()">${state.plantEditMode ? '退出编辑' : '进入编辑'}</button>
+      <button class="btn small" onclick="openPlantForm()">新增标本</button>
+      <button class="btn small ghost" onclick="exportPlantEdits()">导出修改</button>
+      <label class="btn small ghost file-btn">导入修改<input type="file" accept="application/json" onchange="importPlantEdits(this.files[0])"></label>
+      <button class="btn small warn" onclick="resetPlantEdits()">清空本地修改</button>
+    </div>
+  </section>`;
 }
 
 function soundCards() {
@@ -225,13 +292,23 @@ function setupSoundSearch() {
 
 function imageGallery(x, label) {
   const imgs = imagesOf(x);
-  return `<section class="ppt-gallery"><div class="gallery-title"><div><b>${label}</b><span>共${imgs.length}张，点击可放大查看</span></div><span class="pill">点击图片可放大</span></div><div class="ppt-image-grid">${imgs.map((src, i) => `<button class="ppt-image-item" onclick="zoomPptImage('${src}','${esc(x.name)} · ${label}${i + 1}')"><img loading="lazy" src="${src}" alt="${esc(x.name)} ${label}${i + 1}"><span>${i + 1} / ${imgs.length}</span></button>`).join('')}</div></section>`;
+  const edit = state.plantEditMode && D.plants.some(p => p.id === x.id) && label.includes('植物');
+  return `<section class="ppt-gallery"><div class="gallery-title"><div><b>${label}</b><span>共${imgs.length}张，点击可放大查看</span></div><span class="pill">${edit ? '编辑模式已开启' : '点击图片可放大'}</span></div><div class="ppt-image-grid">${imgs.map((src, i) => `<div class="ppt-image-wrap"><button class="ppt-image-item" onclick="zoomPptImage('${src}','${esc(x.name)} · ${label}${i + 1}')"><img loading="lazy" src="${src}" alt="${esc(x.name)} ${label}${i + 1}"><span>${i + 1} / ${imgs.length}</span></button>${edit ? `<button class="image-remove" onclick="removePlantImage('${x.id}', '${esc(src)}')">删除这张图</button>` : ''}</div>`).join('')}</div></section>`;
 }
 function birdGallery(x) {
   return imageGallery(x, `PPT第${x.slide}页全部图片`);
 }
 function plantGallery(x) {
   return imageGallery(x, '植物标本全部图片');
+}
+function plantDetailEditControls(x) {
+  if (!state.plantEditMode) return '';
+  const hidden = plantEdits().hiddenImages[x.id]?.length || 0;
+  return `<div class="edit-detail-actions">
+    <button class="btn small" onclick="openPlantForm('${x.id}')">编辑这个标本</button>
+    <button class="btn small ghost" onclick="openPlantImageForm('${x.id}')">给这个标本加图片</button>
+    ${hidden ? `<button class="btn small ghost" onclick="restorePlantImages('${x.id}')">恢复隐藏图片 ${hidden} 张</button>` : ''}
+  </div>`;
 }
 window.zoomPptImage = (src, alt) => {
   const old = document.querySelector('#image-zoom');
@@ -275,11 +352,207 @@ function detailBody(kind, x) {
   return `<button class="modal-close" onclick="closeModal()">×</button><div class="modal-card" id="detail-card">
     ${detailNav(kind, x.id, 'top')}
     ${gallery}
-    <div class="modal-content"><div class="meta">${meta}</div><h2>${x.name}</h2><h3>${title}</h3><div class="feature-list">${x.features.map((f, i) => `<div class="feature">${i + 1}. ${esc(f)}</div>`).join('')}</div>${basis}${notes}<div class="answer-row"><button class="btn" onclick="startSingle('${kind}','${x.id}')">随机抽一张练习</button></div></div>
+    <div class="modal-content"><div class="meta">${meta}</div><h2>${x.name}</h2>${isPlant ? plantDetailEditControls(x) : ''}<h3>${title}</h3><div class="feature-list">${x.features.map((f, i) => `<div class="feature">${i + 1}. ${esc(f)}</div>`).join('')}</div>${basis}${notes}<div class="answer-row"><button class="btn" onclick="startSingle('${kind}','${x.id}')">随机抽一张练习</button></div></div>
     ${detailNav(kind, x.id, 'bottom')}
     ${detailNav(kind, x.id, 'sticky')}
   </div>`;
 }
+
+function isBasePlant(id) {
+  return BASE_PLANTS.some(x => x.id === id);
+}
+function refreshPlantView(id = state.detail?.id) {
+  syncPlantData();
+  if (state.route === 'plants') {
+    const q = state.listFilters.plant || '';
+    const list = q ? D.plants.filter(x => norm(JSON.stringify(x)).includes(norm(q))) : D.plants;
+    state.listIds.plant = list.map(x => x.id);
+  }
+  if (id && state.detail?.kind === 'plant' && getItem('plant', id)) {
+    state.detail = { kind: 'plant', id };
+    modal.innerHTML = detailBody('plant', getItem('plant', id));
+  } else {
+    render();
+  }
+}
+window.togglePlantEditMode = () => {
+  state.plantEditMode = !state.plantEditMode;
+  render();
+};
+window.removePlantImage = (id, src) => {
+  const plant = getItem('plant', id);
+  if (!plant) return;
+  const imgs = imagesOf(plant);
+  if (imgs.length <= 1) {
+    alert('至少保留一张图片。');
+    return;
+  }
+  if (!confirm(`确定删除“${plant.name}”的这张图片吗？`)) return;
+  const edits = plantEdits();
+  if (isBasePlant(id)) {
+    edits.hiddenImages[id] ||= [];
+    if (!edits.hiddenImages[id].includes(src)) edits.hiddenImages[id].push(src);
+  } else {
+    const item = edits.customPlants.find(x => x.id === id);
+    if (item) {
+      item.images = imagesOfRaw(item).filter(x => x !== src);
+      item.image = item.images[0] || '';
+    }
+  }
+  savePlantEdits(edits);
+  refreshPlantView(id);
+};
+window.restorePlantImages = id => {
+  const edits = plantEdits();
+  delete edits.hiddenImages[id];
+  savePlantEdits(edits);
+  refreshPlantView(id);
+};
+function plantFormHtml(x = null) {
+  const editing = !!x;
+  return `<button class="modal-close" onclick="closeModal()">×</button><div class="modal-card editor-card"><form class="plant-form" onsubmit="savePlantForm(event,'${x ? x.id : ''}')">
+    <h2>${editing ? '编辑植物标本' : '新增植物标本'}</h2>
+    <div class="form-grid">
+      <div class="field"><label>种名</label><input id="plant-name" required value="${esc(x?.name || '')}"></div>
+      <div class="field"><label>科名</label><input id="plant-family" required value="${esc(x?.family || '')}"></div>
+      <div class="field"><label>规范学名</label><input id="plant-latin" value="${esc(x?.latin || '')}"></div>
+      <div class="field span3"><label>识别特征，每行一条</label><textarea id="plant-features" required>${esc((x?.features || []).join('\n'))}</textarea></div>
+      <div class="field span3"><label>资料说明</label><textarea id="plant-description">${esc(x?.description || '')}</textarea></div>
+      <div class="field span3"><label>${editing ? '追加图片文件，可不选' : '标本图片文件'}</label><input id="plant-files" type="file" accept="image/*" multiple ${editing ? '' : 'required'}></div>
+      <div class="field span3"><label>图片网址，每行一个，可选</label><textarea id="plant-image-urls" placeholder="https://..."></textarea></div>
+    </div>
+    <p class="meta">图片文件会压缩后保存在当前浏览器；导出修改后可用于正式合并。</p>
+    <div class="answer-row"><button class="btn" type="submit">保存</button><button class="btn ghost" type="button" onclick="closeModal()">取消</button></div>
+  </form></div>`;
+}
+window.openPlantForm = (id = '') => {
+  const x = id ? getItem('plant', id) : null;
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+  modal.innerHTML = plantFormHtml(x);
+};
+function plantImageFormHtml(x) {
+  return `<button class="modal-close" onclick="closeModal()">×</button><div class="modal-card editor-card"><form class="plant-form" onsubmit="savePlantImages(event,'${x.id}')">
+    <h2>给“${esc(x.name)}”添加图片</h2>
+    <div class="form-grid">
+      <div class="field span3"><label>图片文件</label><input id="plant-files" type="file" accept="image/*" multiple></div>
+      <div class="field span3"><label>图片网址，每行一个，可选</label><textarea id="plant-image-urls" placeholder="https://..."></textarea></div>
+    </div>
+    <p class="meta">至少选择图片文件或填写一个图片网址。</p>
+    <div class="answer-row"><button class="btn" type="submit">保存图片</button><button class="btn ghost" type="button" onclick="closeModal()">取消</button></div>
+  </form></div>`;
+}
+window.openPlantImageForm = id => {
+  const x = getItem('plant', id);
+  if (!x) return;
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+  modal.innerHTML = plantImageFormHtml(x);
+};
+async function fileToImageData(file) {
+  const bitmap = await createImageBitmap(file);
+  const max = 1400;
+  const scale = Math.min(1, max / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+  canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL('image/webp', .78);
+}
+async function collectPlantImages() {
+  const files = [...(document.querySelector('#plant-files')?.files || [])];
+  const fileImages = [];
+  for (const file of files) fileImages.push(await fileToImageData(file));
+  const urls = String(document.querySelector('#plant-image-urls')?.value || '').split(/\n+/).map(s => s.trim()).filter(Boolean);
+  return [...fileImages, ...urls];
+}
+window.savePlantForm = async (event, id) => {
+  event.preventDefault();
+  const edits = plantEdits();
+  const existing = id ? getItem('plant', id) : null;
+  const addedImages = await collectPlantImages();
+  const baseImages = existing ? imagesOf(existing) : [];
+  const images = [...baseImages, ...addedImages];
+  if (!images.length) {
+    alert('请至少添加一张标本图片。');
+    return;
+  }
+  const item = cleanPlant({
+    id: id || `custom-${Date.now()}`,
+    name: document.querySelector('#plant-name').value.trim(),
+    family: document.querySelector('#plant-family').value.trim(),
+    latin: document.querySelector('#plant-latin').value.trim(),
+    features: document.querySelector('#plant-features').value.split(/\n+/).map(s => s.trim()).filter(Boolean),
+    description: document.querySelector('#plant-description').value.trim(),
+    images
+  });
+  if (id && isBasePlant(id)) {
+    edits.updates[id] = { ...edits.updates[id], ...item };
+  } else if (id) {
+    const i = edits.customPlants.findIndex(x => x.id === id);
+    if (i >= 0) edits.customPlants[i] = item;
+  } else {
+    edits.customPlants.push(item);
+  }
+  savePlantEdits(edits);
+  state.plantEditMode = true;
+  closeModal(false);
+  route('plants', false);
+};
+window.savePlantImages = async (event, id) => {
+  event.preventDefault();
+  const addedImages = await collectPlantImages();
+  if (!addedImages.length) {
+    alert('请先选择图片文件或填写图片网址。');
+    return;
+  }
+  const edits = plantEdits();
+  const existing = getItem('plant', id);
+  const images = [...imagesOf(existing), ...addedImages];
+  if (isBasePlant(id)) edits.updates[id] = { ...edits.updates[id], images, image: images[0] };
+  else {
+    const item = edits.customPlants.find(x => x.id === id);
+    if (item) { item.images = images; item.image = images[0]; }
+  }
+  savePlantEdits(edits);
+  state.plantEditMode = true;
+  refreshPlantView(id);
+};
+window.exportPlantEdits = () => {
+  const blob = new Blob([JSON.stringify(plantEdits(), null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `plant-edits-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+window.importPlantEdits = file => {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      if (!parsed || typeof parsed !== 'object') throw new Error('bad json');
+      savePlantEdits({
+        hiddenImages: parsed.hiddenImages || {},
+        updates: parsed.updates || {},
+        customPlants: parsed.customPlants || []
+      });
+      state.plantEditMode = true;
+      render();
+    } catch {
+      alert('导入失败，请选择植物修改 JSON 文件。');
+    }
+  };
+  reader.readAsText(file);
+};
+window.resetPlantEdits = () => {
+  if (!confirm('确定清空当前浏览器里的植物编辑记录吗？')) return;
+  store.set('plantEdits', { hiddenImages: {}, updates: {}, customPlants: [] });
+  syncPlantData();
+  render();
+};
 window.openCard = (kind, id, push = true) => {
   const x = getItem(kind, id);
   if (!x) return;

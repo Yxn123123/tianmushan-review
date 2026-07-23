@@ -12,6 +12,18 @@
 .detail-nav-btn.back{text-align:center;background:var(--green);border-color:var(--green);color:white;white-space:nowrap}
 .detail-nav-btn b{display:inline-block;max-width:100%;vertical-align:bottom;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .detail-nav-btn:disabled{cursor:not-allowed;opacity:.42;background:#eef1ee;color:#7a857d}
+.edit-panel{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 18px;padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.edit-panel.active{border-color:#9db7a5;background:#f1f7f3}
+.edit-panel p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.edit-actions,.edit-detail-actions{display:flex;gap:9px;flex-wrap:wrap}
+.file-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center}
+.file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.ppt-image-wrap{display:grid;gap:8px}
+.image-remove{border:1px solid #e7c5bd;border-radius:10px;background:#fbefec;color:var(--red);font-weight:800;padding:10px;cursor:pointer}
+.editor-card{padding:24px}
+.plant-form h2{margin:0 0 16px}
+.plant-form input[type=file]{background:white}
+.edit-detail-actions{margin:12px 0 18px}
 
 .stats.four{grid-template-columns:repeat(4,1fr)}
 .stats.five{grid-template-columns:repeat(5,1fr)}
@@ -69,4 +81,7 @@
   .detail-nav-btn{min-height:50px}
   .detail-nav-btn b{white-space:normal;overflow-wrap:anywhere}
   .detail-nav-btn span{display:block;font-size:12px}
+  .edit-panel{align-items:stretch;flex-direction:column}
+  .edit-actions .btn,.edit-detail-actions .btn{flex:1 1 140px}
+  .editor-card{padding:18px}
 }
